@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="flex-container" id="myContainer">
+  <a class="game-button fade-in-bottom" href="/radical-rush">Radical Rush</a>
+  <a class="game-button fade-in-bottom" href="#">Coming soon</a>
+  <a class="game-button fade-in-bottom" href="#">Coming not soon</a>
+</div>
+<script type="text/javascript" src="{{url_for('static',filename='home.js')}}"></script>
+{% endblock %}
