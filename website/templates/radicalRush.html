@@ -10,40 +10,23 @@
   <a class="game-button fade-in-bottom" href="#">Hard (Coming soon)</a>
   <a class="game-button fade-in-bottom" href="#">Coming not soon</a>
 </div>
-<p class="gameplayElement hidden" id="test"></p>
-
+<div class="scoreCounter">
+  <span>Correct: </span><span id="score">0</span><span>/??</span>
+</div>
+<div class="gameplayElement hidden" id="timer-container">
+  <p id="timer">10</p>
+</div>
+<div class="gameplayElement hidden" id="radical-container">
+  <p class="gameplayElement hidden" id="currRadical"></p>
+  <input type="text" id="answer" name="answer" placeholder="答え">
+</div>
 <script>
-let difficulty=0;
-let pbois = document.getElementById("myContainer").children;
-let temp = '{{componentsToKanji}}';
-let newtemp = temp.replace(/&#34;/g,'"');
-console.log(newtemp);
-let masterList=(JSON.parse(newtemp));
-
-for (let i = 0; i<pbois.length;i++){
-  pbois[i].style.animationDelay=i*.15+"s";
-}
-function makeGoAway(diff){
-  let diffh = document.getElementById("diffh");
-  let container= document.getElementById("myContainer");
-  diffh.classList.add("goAway");
-  container.classList.add("goAway");
-
-  diffh.addEventListener("transitionend", () =>
-  {
-    diffh.remove();
-    container.remove();
-    startGame(diff);
-  })
-}
-function startGame(diff){
-  let gameplayElements = document.getElementsByClassName("gameplayElement");
-  for (let element of gameplayElements){
-    element.className="gameplayElement active";
-    element.innerHTML=masterList["口"];
-  }
-
-}
+  let temp = '{{componentsToKanji}}';
+  let newtemp = temp.replace(/&#34;/g,'"');
+  console.log(newtemp);
+  let masterList=(JSON.parse(newtemp));
 
 </script>
+<script type="text/javascript" src="{{url_for('static',filename='radicalRush.js')}}"></script>
+
 {% endblock %}
