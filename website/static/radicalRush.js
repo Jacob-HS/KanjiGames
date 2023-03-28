@@ -1,4 +1,5 @@
 var currentQuestion="";
+var poolSize;
 var askedPool = new Set();
 var answer=document.getElementById("answer");
 var keys = Object.keys(masterList);
@@ -19,7 +20,9 @@ function makeGoAway(diff){
   let container= document.getElementById("myContainer");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
-
+  poolSize=document.getElementById("diffChanger").value;
+  document.getElementById("label").classList.add("goAway");
+  document.getElementById("diffChanger").classList.add("goAway");
   diffh.addEventListener("transitionend", () =>
   {
     diffh.remove();
@@ -30,7 +33,8 @@ function makeGoAway(diff){
 function startGame(diff){
   let gameplayElements = document.getElementsByClassName("gameplayElement");
   for (let element of gameplayElements){
-    element.className="gameplayElement active";
+    element.classList.remove("hidden");
+    element.classList.add("active");
   }
   document.getElementById("timer").innerHTML=10;
   setInterval(tickDown,1000);
@@ -39,7 +43,7 @@ function startGame(diff){
 }
 function pickQuestion(){
   do{
-    candidate= keys[ 50 * Math.random() << 0];
+    candidate= keys[ poolSize * Math.random() << 0];
   } while (askedPool.has(candidate));
   askedPool.add(candidate);
   document.getElementById("currRadical").innerHTML=candidate;
@@ -52,6 +56,10 @@ function checkAnswer(){
   var answer=answerElement.value;
   answerElement.value="";
   for(const kanji of answer){
+    if (kanji == "ｓ" || kanji == "s"){
+      pickQuestion();
+      break;
+    }
     if (masterList[currentQuestion].includes(kanji)){
       document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
       pickQuestion();
