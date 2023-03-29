@@ -1,3 +1,4 @@
+
 @-webkit-keyframes fade-in-bottom{0%{-webkit-transform:translateY(50px);transform:translateY(50px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes fade-in-bottom{0%{-webkit-transform:translateY(50px);transform:translateY(50px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}
 .fade-in-bottom {
 	-webkit-animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -178,4 +179,17 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#heartContainer {
+  color:white;
+  float: right;
+  position:absolute;
+  right: 20%;
+  top: 6%;
+}
+
+#heartContainer i {
+  font-size: 40px;
+  padding-right:10px;
 }
