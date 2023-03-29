@@ -41,8 +41,6 @@ function makeGoAway(diff){
   diffh.classList.add("goAway");
   container.classList.add("goAway");
   poolSize=50+(100*diff);
-  document.getElementById("label").style.display="none";
-  document.getElementById("diffChanger").style.display="none";
   if (!addedListener){
     addedListener=true;
     diffh.addEventListener("transitionend", () =>
