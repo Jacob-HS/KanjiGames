@@ -6,9 +6,9 @@
 
 <p class="difficulty-header" id="diffh">Select difficulty:</p>
 <div class="flex-container" style="margin-top:0px;" id="myContainer">
-  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(1)">Normal</a>
-  <a class="game-button fade-in-bottom" href="#">Hard (Coming soon)</a>
-  <a class="game-button fade-in-bottom" href="#">Coming not soon</a>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(1)">Easy</a>
+  <a class="game-button fade-in-bottom" href="#">Normal (Coming soon)</a>
+  <a class="game-button fade-in-bottom" href="#">Hard (Not coming soon)</a>
 </div>
 
 
@@ -17,7 +17,7 @@
 
 
 <div class="gameplayElement hidden scoreCounter">
-  <span>Correct: </span><span id="score">0</span><span>/??</span>
+  <span>Correct: </span><span id="score">0</span><span>/10</span>
 </div>
 
 <div class="gameplayElement hidden" id="timer-container">
@@ -28,6 +28,19 @@
   <p class="gameplayElement hidden" id="currRadical"></p>
   <input type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
 </div>
+
+<div class="summaryElement hidden" id="resultContainer">
+  <p class="summaryElement result hidden fade-in-bottom" id="result"></p>
+</div>
+
+<div class="summaryElement hidden" id="summaryButtonContainer">
+  <button type="button" id="retry" onclick="playAgain()">Play again</button>
+  <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
+</div>
+<div class="summaryElement hidden" id="answerHeaderContainer">
+  <p id="answerHeader">Answers:</p>
+</div>
+<div id="summaryAnswerContainer"></div>
 <script>
   let temp = '{{componentsToKanji}}';
   let newtemp = temp.replace(/&#34;/g,'"');
