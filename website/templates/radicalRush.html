@@ -7,17 +7,45 @@
 
 <p class="difficulty-header" id="diffh">Select difficulty:</p>
 <div class="flex-container" style="margin-top:0px;" id="myContainer">
-  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(0)">Easy</a>
-  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(1)">Normal</a>
-  <a class="game-button fade-in-bottom" href="#">Hard (coming soon)</a>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(1)">Easy</a>
+  <div class="tooltip">
+    <p>Question Pool: Easy</p>
+    <p>Score Limit: 10</p>
+    <p>Time Limit: 15s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(2)">Normal</a>
+  <div class="tooltip">
+    <p>Question Pool: Medium</p>
+    <p>Score Limit: 15</p>
+    <p>Time Limit: 10s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(3)">Hard</a>
+  <div class="tooltip">
+    <p>Question Pool: Hard</p>
+    <p>Score Limit: 15</p>
+    <p>Time Limit: 10s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(4)">Insane</a>
+  <div class="tooltip">
+    <p>Question Pool: Medium+Hard</p>
+    <p>Score Limit: 20</p>
+    <p>Time Limit: 15s</p>
+    <p>Lives: 3</p>
+    <p style="color:red">No Joyo Kanji Allowed</p>
+  </div>
 </div>   
 
 
 
 <div class="gameplayElement hidden scoreCounter">
-  <span>Correct: </span><span id="score">0</span><span>/10</span>
+  <span id="score">0</span><span>/</span><span id="maxScore">1</span>
 </div>
-
+<div class ="gameplayElement hidden" id="progressBarContainer">
+  <div id="progressBar"></div>
+</div>
 <div class="gameplayElement hidden" id="timer-container">
   <p id="timer">10</p>
 </div>
@@ -46,9 +74,11 @@
 <script>
   let temp = '{{componentsToKanji}}';
   let newtemp = temp.replace(/&#34;/g,'"');
-  console.log(newtemp);
   let masterList=(JSON.parse(newtemp));
 
+  temp = '{{finalDifficulty}}';
+  newtemp = temp.replace(/&#34;/g,'"');
+  let finalDifficulty=(JSON.parse(newtemp));
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='radicalRush.js')}}"></script>
 

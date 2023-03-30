@@ -1,8 +1,14 @@
 var currentQuestion="";
+var difficultyLevel;
+var activeList;
+var maxScore;
+var maxTime;
 var poolSize;
+var poolFloor;
 var addedListener =false;
 var askedPool =[];
-var keys = Object.keys(masterList);
+var correctTracker=[];
+var keys;
 var intervalID;
 var currentHearts=3;
 
@@ -12,13 +18,17 @@ answer.addEventListener("keypress", function(event){
   }
 })
 function tickDown(){
+  document.getElementById("heartContainer").classList.remove("shake-horizontal");
   document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)-1;
   if (document.getElementById("timer").innerHTML =="0"){
+    correctTracker.push("answeredIncorrectly");
     removeHeart();
   }
 }
 
 function removeHeart(){
+  var heartContainer=document.getElementById("heartContainer");
+  heartContainer.classList.add("shake-horizontal");
   thisHeart=document.getElementById("heart"+currentHearts);
   thisHeart.className="fa fa-heart-o";
   currentHearts--;
@@ -33,14 +43,14 @@ function removeHeart(){
 }
 
 function addTime(){
-  document.getElementById("timer").innerHTML=10;
+  document.getElementById("timer").innerHTML=maxTime;
 }
 function makeGoAway(diff){
   let diffh = document.getElementById("diffh");
   let container= document.getElementById("myContainer");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
-  poolSize=50+(100*diff);
+  setDiff(diff)
   if (!addedListener){
     addedListener=true;
     diffh.addEventListener("transitionend", () =>
@@ -51,13 +61,53 @@ function makeGoAway(diff){
     })
   }
 }
+
+function setDiff(diff){
+  difficultyLevel=diff;
+
+  if (difficultyLevel==1){
+    poolSize=50;
+    poolFloor=0;
+    maxScore="10";
+    maxTime="15";
+    activeList=masterList;
+    keys = Object.keys(masterList);
+
+  }
+  if (difficultyLevel==2){
+    poolSize=150;
+    poolFloor=20;
+    maxScore="15";
+    maxTime="10";
+    activeList=masterList;
+    keys = Object.keys(masterList);
+  }
+  if (difficultyLevel==3){
+    poolSize=759;
+    poolFloor=170;
+    maxScore="15";
+    maxTime="10";
+    activeList=masterList;
+    keys = Object.keys(masterList);
+  }
+  if(difficultyLevel==4){
+    poolSize=505;
+    poolFloor=0;
+    maxScore="20";
+    maxTime="15";
+    activeList=finalDifficulty;
+    keys = Object.keys(activeList);
+  }
+}
+
 function startGame(){
   let gameplayElements = document.getElementsByClassName("gameplayElement");
   for (let element of gameplayElements){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
-  document.getElementById("timer").innerHTML=10;
+  document.getElementById("maxScore").innerHTML=maxScore;
+  document.getElementById("timer").innerHTML=maxTime;
   console.log("start");
   intervalID = setInterval(tickDown,1000);
   pickQuestion();
@@ -65,7 +115,7 @@ function startGame(){
 }
 function pickQuestion(){
   do{
-    candidate= keys[ poolSize * Math.random() << 0];
+    candidate= keys[Math.floor((poolSize-poolFloor) * Math.random())+poolFloor ];
   } while (askedPool.includes(candidate));
   askedPool.push(candidate);
   document.getElementById("currRadical").innerHTML=candidate;
@@ -77,17 +127,18 @@ function checkAnswer(){
   var answerElement=document.getElementById("answer");
   var answer=answerElement.value;
   answerElement.value="";
+  document.getElementById("score").innerHTML;
   for(const kanji of answer){
-    if (kanji == "ｓ" || kanji == "s" || kanji == "S" || kanji == "Ｓ"){
-      pickQuestion();
-      return;
-    }
-    if (masterList[currentQuestion].includes(kanji)){
+
+    
+    if (activeList[currentQuestion].includes(kanji)){
+      correctTracker.push("answeredCorrectly");
       document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
-      if (document.getElementById("score").innerHTML=="10"){
+      if (document.getElementById("score").innerHTML==maxScore){
         endGame(true);
         return;
       }
+      document.getElementById("progressBar").style.width=""+(parseInt(document.getElementById("score").innerHTML)/parseInt(maxScore))*100+"%";
       pickQuestion();
       addTime();
       break;
@@ -123,6 +174,7 @@ function generateSummaryAnswers(){
   var row;
   var temp;
   var kanji;
+  let i=0;
   summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
   for (let component of askedPool){
     console.log(askedPool);
@@ -130,14 +182,15 @@ function generateSummaryAnswers(){
     temp=document.createElement("p");
     kanji=document.createTextNode(component);
     temp.appendChild(kanji);
-    temp.classList.add("summaryElement","active","summaryComponent");
+    temp.classList.add("summaryElement","active","summaryComponent", correctTracker[i]);
+    i++;
     row.appendChild(temp);
     summaryAnswerContainer.appendChild(row);
     row.classList.add("summaryElement","active", "summaryAnswerRow");
 
-      for(let i=0;i<10;i++){
+      for(let i=0;i<Math.min(activeList[component].length,10);i++){
         temp=document.createElement("p");
-        kanji=document.createTextNode(masterList[component][i]);
+        kanji=document.createTextNode(activeList[component][i]);
         temp.appendChild(kanji);
         temp.classList.add("summaryElement","active","summaryAnswer");
         row.appendChild(temp);
@@ -164,10 +217,11 @@ function resetGame(){
   for (let element of heartElements){
     element.classList.remove("fa-heart-o");
     element.classList.add("fa-heart");
-    console.log("ran");
     
   }
-
+  document.getElementById("heartContainer").classList.remove("shake-horizontal");
+  document.getElementById("progressBar").style.width="0%";
+  correctTracker=[];
 }
 function playAgain(){
   resetGame();
