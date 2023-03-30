@@ -4,6 +4,8 @@ var addedListener =false;
 var askedPool =[];
 var keys = Object.keys(masterList);
 var intervalID;
+var currentHearts=3;
+
 answer.addEventListener("keypress", function(event){
   if(event.key=="Enter"){
     checkAnswer();
@@ -12,20 +14,33 @@ answer.addEventListener("keypress", function(event){
 function tickDown(){
   document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)-1;
   if (document.getElementById("timer").innerHTML =="0"){
-    endGame(false);
+    removeHeart();
   }
 }
+
+function removeHeart(){
+  thisHeart=document.getElementById("heart"+currentHearts);
+  thisHeart.className="fa fa-heart-o";
+  currentHearts--;
+  if (currentHearts == 0){
+    endGame(false);
+  }else{
+    pickQuestion();
+    addTime();
+  }
+  
+
+}
+
 function addTime(){
-  document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)+10;
+  document.getElementById("timer").innerHTML=10;
 }
 function makeGoAway(diff){
   let diffh = document.getElementById("diffh");
   let container= document.getElementById("myContainer");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
-  poolSize=document.getElementById("diffChanger").value;
-  document.getElementById("label").style.display="none";
-  document.getElementById("diffChanger").style.display="none";
+  poolSize=50+(100*diff);
   if (!addedListener){
     addedListener=true;
     diffh.addEventListener("transitionend", () =>
@@ -63,7 +78,7 @@ function checkAnswer(){
   var answer=answerElement.value;
   answerElement.value="";
   for(const kanji of answer){
-    if (kanji == "ｓ" || kanji == "s"){
+    if (kanji == "ｓ" || kanji == "s" || kanji == "S" || kanji == "Ｓ"){
       pickQuestion();
       return;
     }
@@ -102,10 +117,7 @@ function displaySummary(win){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
-
-
   generateSummaryAnswers();
- 
 }
 function generateSummaryAnswers(){
   var row;
@@ -145,6 +157,17 @@ function resetGame(){
   }
   askedPool=[];
   document.getElementById("score").innerHTML=0;
+  document.getElementById("summaryAnswerContainer").innerHTML="";
+  currentHearts=3;
+
+  let heartElements = document.getElementById("heartContainer").children;
+  for (let element of heartElements){
+    element.classList.remove("fa-heart-o");
+    element.classList.add("fa-heart");
+    console.log("ran");
+    
+  }
+
 }
 function playAgain(){
   resetGame();
