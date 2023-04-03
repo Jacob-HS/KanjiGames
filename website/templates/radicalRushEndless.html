@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Radical Rush{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<p class="difficulty-header" id="diffh">Select difficulty:</p>
+<div class="flex-container" id="myContainer">
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(1)">Easy</a>
+  <div class="tooltip">
+    <p>Question Pool: Easy</p>
+    <p>Score Limit: 10pts</p>
+    <p>Time Limit: 15s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(2)">Normal</a>
+  <div class="tooltip">
+    <p>Question Pool: Medium</p>
+    <p>Score Limit: 15pts</p>
+    <p>Time Limit: 10s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(3)">Hard</a>
+  <div class="tooltip">
+    <p>Question Pool: Hard</p>
+    <p>Score Limit: 15pts</p>
+    <p>Time Limit: 10s</p>
+    <p>Lives: 3</p>
+  </div>
+  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(4)">Insane</a>
+  <div class="tooltip">
+    <p>Question Pool: Hard</p>
+    <p>Score Limit: 20pts</p>
+    <p>Time Limit: 15s</p>
+    <p>Lives: 3</p>
+    <p style="color:red">No Joyo Kanji Allowed</p>
+  </div>
+</div>   
+
+
+
+<div class="gameplayElement hidden scoreCounter">
+  <span id="score" style="font-size: 46px; color:rgb(0, 161, 40)">0</span>
+</div>
+<div class="gameplayElement hidden" id="timer-container">
+  <p id="timer">10</p>
+</div>
+
+<div class="gameplayElement hidden" id="heartContainer">
+  <i class="fa fa-heart" id="heart1"></i><i class="fa fa-heart" id="heart2"></i><i class="fa fa-heart" id="heart3"></i>
+</div>
+
+<div class="gameplayElement hidden"id="responseContainer">
+  <div class="responseSquare" id="response1"></div>
+  <div class="responseSquare" id="response2"></div>
+  <div class="responseSquare" id="response3"></div>
+</div>
+
+<div class="gameplayElement hidden" id="radical-container">
+  <p class="gameplayElement hidden" id="currRadical"></p>
+</div>
+<input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
+
+<div class="gameplayElement hidden" id="bannedContainer">
+
+</div>
+
+<div class="summaryElement hidden" id="resultContainer">
+  <p class="summaryElement result hidden fade-in-bottom" id="result"></p>
+</div>
+
+<div class="summaryElement hidden" id="summaryButtonContainer">
+  <button type="button" id="retry" onclick="playAgain()">Play again</button>
+  <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
+</div>
+<div class="summaryElement hidden" id="answerHeaderContainer">
+  <p id="answerHeader">Answers:</p>
+</div>
+<div id="summaryAnswerContainer"></div>
+<script>
+  let temp = '{{componentsToKanji}}';
+  let newtemp = temp.replace(/&#34;/g,'"');
+  let masterList=(JSON.parse(newtemp));
+
+  temp = '{{finalDifficulty}}';
+  newtemp = temp.replace(/&#34;/g,'"');
+  let finalDifficulty=(JSON.parse(newtemp));
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='radicalRushEndless.js')}}"></script>
+
+{% endblock %}

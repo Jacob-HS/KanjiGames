@@ -16,6 +16,33 @@ body {
 
 }
 
+.modeHeader {
+  text-align: center;
+  width:100%;
+  color: white;
+  font-size: 36px;
+}
+
+.modeButton {
+  width:22vw;
+  height: 60vh;
+  margin: 0 3vw;
+  border-radius: 10px;  
+  background-color: white;
+  color: black;
+  font-size: 3vh;
+}
+
+.modeButton p {
+  padding: 10px 20px 0px 20px;
+  margin:0;
+}
+#modeContainer {
+  margin-top:3%;
+  display:flex; 
+  justify-content: center;
+  text-align: center;
+}
 .difficulty-header{
   margin: 5% 0 0 25%;
   color:rgba(255, 255, 255, 0.763);
@@ -240,4 +267,45 @@ body {
 #heartContainer i {
   font-size: 40px;
   padding-right:10px;
+}
+
+#responseContainer {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  left: 20%;
+  top: 10%;
+}
+
+.responseSquare {
+  width: 12vh;
+  height: 12vh;
+  background-color: gray;
+  margin: 1vh;
+  border-radius: 4px;
+  color:white;
+  text-align: center;
+  font-size:9.5vh;
+
+}
+
+.acceptedResponse {
+  background-color: green;
+
+}
+
+#bannedContainer {
+  display: flex;
+  margin:3% 10% 0 10%;
+  flex-wrap: wrap;
+}
+
+.bannedAnswer {
+  background-color: rgba(240, 248, 255, 0.527);
+  color:black;
+  font-size: 30px;
+  margin: 0 5px 5px 0;
+  width:auto;
+  padding:5px 10px;
+  border-radius: 7px;
 }
