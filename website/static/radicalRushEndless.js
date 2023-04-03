@@ -21,9 +21,14 @@ answer.addEventListener("keypress", function(event){
 function tickDown(){
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
   document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)-1;
-  if (document.getElementById("timer").innerHTML =="0"){
+  if (document.getElementById("timer").innerHTML =="0" && currentResponse == 1){
     correctTracker.push("answeredIncorrectly");
     removeHeart();
+  }
+  if (document.getElementById("timer").innerHTML =="0" && currentResponse > 1){
+    correctTracker.push("answeredCorrectly");
+    pickQuestion();
+    addTime();
   }
 }
 
@@ -83,7 +88,7 @@ function setDiff(diff){
     keys = Object.keys(masterList);
   }
   if (difficultyLevel==3){
-    poolSize=758;
+    poolSize=334;
     poolFloor=170;
     maxScore="15";
     maxTime="10";

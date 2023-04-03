@@ -20,7 +20,7 @@ body {
   text-align: center;
   width:100%;
   color: white;
-  font-size: 36px;
+  font-size: 10vh;
 }
 
 .modeButton {
@@ -35,7 +35,7 @@ body {
 }
 
 .modeButton p {
-  padding: 10px 20px 0px 20px;
+  padding: 0 10%;
   margin:0;
   
 }
@@ -317,8 +317,8 @@ body {
 .bannedAnswer {
   background-color: rgba(240, 248, 255, 0.527);
   color:black;
-  font-size: 30px;
-  height:40px;
+  font-size: 6vh;
+  height:7%;
   margin: 2.5px 2.5px 2.5px 2.5px;
   padding:5px 10px;
   border-radius: 7px;
