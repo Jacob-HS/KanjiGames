@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Mode Select{% endblock %}
+
+{% block content %}
+<div class="modeHeader">Select Gamemode:</div>
+<div id="modeContainer">
+  <a style="text-decoration: none; display: inline-block;"href="/radical-rush/standard">
+    <div class="modeButton">
+      <p style="font-size: 5vh;">Standard</p>
+      <hr style="width:80%">
+      <p style="text-align: left;">Answer with a kanji containing the provided component within the alloted time or lose a life!</p>
+      <p style="text-align: left;">Win by reaching the score limit before losing all 3 lives.</p>
+
+    </div>
+  </a>
+  <a style="text-decoration: none; display: inline-block;"href="/radical-rush/endless">
+    <div class="modeButton">
+      <p style="font-size: 5vh;">Endless</p>
+      <hr style="width:80%">
+      <p style="text-align: left;">Answer with 3 kanji containing the provided component within the alloted time or lose a life!</p>
+      <p style="text-align: left;">Kanji can only be used once per game. Get as many points as possible!</p>
+  
+    </div>
+  </a>
+</div>
+{% endblock %}

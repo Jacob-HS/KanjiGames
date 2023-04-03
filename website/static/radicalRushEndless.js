@@ -1,16 +1,17 @@
 var currentQuestion="";
 var difficultyLevel;
 var activeList;
-var maxScore;
-var maxTime;
 var poolSize;
 var poolFloor;
+var maxTime;
 var addedListener =false;
-var askedPool =[];
+var askedPool=[];
 var correctTracker=[];
+var bannedAnswerList=[];
 var keys;
 var intervalID;
 var currentHearts=3;
+var currentResponse=1;
 
 answer.addEventListener("keypress", function(event){
   if(event.key=="Enter"){
@@ -33,7 +34,7 @@ function removeHeart(){
   thisHeart.className="fa fa-heart-o";
   currentHearts--;
   if (currentHearts == 0){
-    endGame(false);
+    endGame();
   }else{
     pickQuestion();
     addTime();
@@ -68,7 +69,6 @@ function setDiff(diff){
   if (difficultyLevel==1){
     poolSize=50;
     poolFloor=0;
-    maxScore="10";
     maxTime="15";
     activeList=masterList;
     keys = Object.keys(masterList);
@@ -90,14 +90,7 @@ function setDiff(diff){
     activeList=masterList;
     keys = Object.keys(masterList);
   }
-  if(difficultyLevel==4){
-    poolSize=504;
-    poolFloor=0;
-    maxScore="20";
-    maxTime="15";
-    activeList=finalDifficulty;
-    keys = Object.keys(activeList);
-  }
+  console.log(activeList)
 }
 
 function startGame(){
@@ -106,7 +99,6 @@ function startGame(){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
-  document.getElementById("maxScore").innerHTML=maxScore;
   document.getElementById("timer").innerHTML=maxTime;
   console.log("start");
   intervalID = setInterval(tickDown,1000);
@@ -120,6 +112,7 @@ function pickQuestion(){
   askedPool.push(candidate);
   document.getElementById("currRadical").innerHTML=candidate;
   currentQuestion=candidate;
+  resetSideResponses();
 } 
 
 
@@ -129,21 +122,35 @@ function checkAnswer(){
   answerElement.value="";
   document.getElementById("score").innerHTML;
   for(const kanji of answer){
-
+    if (bannedAnswerList.includes(kanji)){
+      continue;
+    }
     
     if (activeList[currentQuestion].includes(kanji)){
-      correctTracker.push("answeredCorrectly");
       document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
-      if (document.getElementById("score").innerHTML==maxScore){
-        endGame(true);
-        return;
-      }
-      document.getElementById("progressBar").style.width=""+(parseInt(document.getElementById("score").innerHTML)/parseInt(maxScore))*100+"%";
-      pickQuestion();
+      temp = document.getElementById("response"+currentResponse);
+      temp.classList.add("acceptedResponse");
+      temp.innerHTML=kanji;
+      currentResponse++;
+      addBannedAnswer(kanji);
       addTime();
-      break;
+      if (currentResponse>3){
+        correctTracker.push("answeredCorrectly");
+        pickQuestion();
+        break;
+      }
+
     }
   }
+}
+function addBannedAnswer(kanji){
+  bannedAnswerList.push(kanji);
+  temp=document.createElement("p");
+  text=document.createTextNode(kanji);
+  temp.appendChild(text);
+  temp.classList.add("bannedAnswer");
+  document.getElementById("bannedContainer").appendChild(temp);
+
 }
 function endGame(win){
   console.log("stop");
@@ -177,7 +184,7 @@ function generateSummaryAnswers(){
   let i=0;
   summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
   for (let component of askedPool){
-    console.log(askedPool);
+    console.log(correctTracker);
     row=document.createElement("div");
     temp=document.createElement("p");
     kanji=document.createTextNode(component);
@@ -194,11 +201,7 @@ function generateSummaryAnswers(){
         temp.appendChild(kanji);
         temp.classList.add("summaryElement","active","summaryAnswer");
         row.appendChild(temp);
-
       }
-
-
-
   }
 }
 
@@ -220,9 +223,11 @@ function resetGame(){
     
   }
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
-  document.getElementById("progressBar").style.width="0%";
   correctTracker=[];
   document.getElementById("answer").value="";
+  resetSideResponses();
+  document.getElementById("bannedContainer").innerHTML="";
+  bannedAnswerList=[];
 }
 function playAgain(){
   resetGame();
@@ -236,4 +241,12 @@ function changeDifficulty(){
   container.classList.remove("goAway","hidden");
 
 
+}
+function resetSideResponses(){
+  sideResponses=document.getElementById("responseContainer").children;
+  for (element of sideResponses){
+    element.classList.remove("acceptedResponse");
+    element.innerHTML="";
+  }
+  currentResponse=1;
 }
