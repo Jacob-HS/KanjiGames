@@ -17,7 +17,7 @@ def modeSelect():
 
 @views.route('/radical-rush/endless')
 def radicalRushEndless(): 
-    return render_template("radicalRushEndless.html", componentsToKanji=componentsToKanji, finalDifficulty=finalDifficulty)
+    return render_template("radicalRushEndless.html", componentsToKanji=componentsToKanji)
 
 @views.route('/radical-rush/standard')
 def radicalRushTrial():

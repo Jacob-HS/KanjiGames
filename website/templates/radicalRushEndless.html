@@ -28,14 +28,6 @@
     <p>Time Limit: 10s</p>
     <p>Lives: 3</p>
   </div>
-  <a class="game-button fade-in-bottom" href="#" onclick="makeGoAway(4)">Insane</a>
-  <div class="tooltip">
-    <p>Question Pool: Hard</p>
-    <p>Score Limit: 20pts</p>
-    <p>Time Limit: 15s</p>
-    <p>Lives: 3</p>
-    <p style="color:red">No Joyo Kanji Allowed</p>
-  </div>
 </div>   
 
 
@@ -82,10 +74,6 @@
   let temp = '{{componentsToKanji}}';
   let newtemp = temp.replace(/&#34;/g,'"');
   let masterList=(JSON.parse(newtemp));
-
-  temp = '{{finalDifficulty}}';
-  newtemp = temp.replace(/&#34;/g,'"');
-  let finalDifficulty=(JSON.parse(newtemp));
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='radicalRushEndless.js')}}"></script>
 

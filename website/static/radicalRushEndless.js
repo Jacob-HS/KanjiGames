@@ -3,6 +3,7 @@ var difficultyLevel;
 var activeList;
 var poolSize;
 var poolFloor;
+var maxTime;
 var addedListener =false;
 var askedPool=[];
 var correctTracker=[];
@@ -68,7 +69,6 @@ function setDiff(diff){
   if (difficultyLevel==1){
     poolSize=50;
     poolFloor=0;
-    maxScore="10";
     maxTime="15";
     activeList=masterList;
     keys = Object.keys(masterList);
@@ -89,14 +89,6 @@ function setDiff(diff){
     maxTime="10";
     activeList=masterList;
     keys = Object.keys(masterList);
-  }
-  if(difficultyLevel==4){
-    poolSize=504;
-    poolFloor=0;
-    maxScore="20";
-    maxTime="15";
-    activeList=finalDifficulty;
-    keys = Object.keys(activeList);
   }
   console.log(activeList)
 }
