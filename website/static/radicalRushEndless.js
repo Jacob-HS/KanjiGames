@@ -86,7 +86,7 @@ function setDiff(diff){
     poolSize=758;
     poolFloor=170;
     maxScore="15";
-    maxTime="10";
+    maxTime="1";
     activeList=masterList;
     keys = Object.keys(masterList);
   }
@@ -165,11 +165,8 @@ function endGame(win){
 
 function displaySummary(win){
   result=document.getElementById("result");
-  if (win){
-    result.innerHTML="Victory!";
-  }else {
-    result.innerHTML="Defeat."
-  }
+  score=document.getElementById("score").innerHTML;
+  result.innerHTML="Total Score: "+score+"pts.";
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
     element.classList.remove("hidden");

@@ -31,11 +31,13 @@ body {
   background-color: white;
   color: black;
   font-size: 3vh;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
 
 .modeButton p {
   padding: 10px 20px 0px 20px;
   margin:0;
+  
 }
 #modeContainer {
   margin-top:3%;
@@ -72,6 +74,7 @@ body {
   border-radius: 10px;
   color:  #1e1d1e;
   font-size: 8vh;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
 
 .tooltip {
@@ -87,6 +90,7 @@ body {
   transition-duration: 500ms;
   visibility: hidden;
   opacity: 0;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
 
 .tooltip p {
@@ -123,7 +127,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   color:white;
-  font-size: 30px;
+  font-size: 5vh;
 }
 
 .summaryAnswerRow {
@@ -137,9 +141,8 @@ body {
 .summaryAnswer {
   background-color: rgba(240, 248, 255, 0.527);
   color:black;
-  font-size: 60px;
+  font-size: 5vw;
   margin: 0 5px 0 0;
-  width:auto;
   padding:7px 15px;
   border-radius: 10px;
 }
@@ -153,7 +156,7 @@ body {
 
 .summaryComponent {
   color:black;
-  font-size: 60px;
+  font-size: 5vw;
   margin: 0 35px 0 0;
   width:auto;
   padding:7px 15px;
@@ -163,14 +166,18 @@ body {
 ::placeholder {
   text-align: center;
   color:white;
-  font-size: 30px;
+  font-size: 5vh;
 }
 #timer-container {
   text-align: center;
   margin: 0 40% 0 40%;
   color:white;
-  font-size: 35px;
+  font-size: 8vh;
   font-weight: bold;
+}
+
+#timer {
+  margin: 6vh 0;
 }
 
 #radical-container {
@@ -179,7 +186,7 @@ body {
 }
 #currRadical {
   color: rgb(247, 247, 247);
-  font-size: 100px;
+  font-size: 15vh;
   margin: 0px 0 0 0;
 }
 #answer {
@@ -187,12 +194,13 @@ body {
   margin-right: 30%;
   width: 40%;
   margin-left: 30%;
-  height: 40px;
+  border-radius: 2vh;
+  height: 7vh;
   text-align: center;
   border: none;
   background-color:rgba(255, 255, 255, 0.308);
   color: white;
-  font-size: 30px;
+  font-size: 5vh;
 }
 
 #result {
@@ -231,7 +239,7 @@ body {
   background-color: #1e1d1e;
   border: 2px solid white;
   border-radius: 3px;
-  height:15px;
+  height:3vh;
 }
 
 #progressBar {
@@ -239,7 +247,7 @@ body {
   width:0%;
   transition-property: width;
   transition-duration: 400ms;
-  height:15px;
+  height:100%;
 }
 
 #answerHeaderContainer {
@@ -260,13 +268,13 @@ body {
   color:white;
   float: right;
   position:absolute;
-  right: 20%;
+  right: 17%;
   top: 13%;
 }
 
 #heartContainer i {
-  font-size: 40px;
-  padding-right:10px;
+  font-size: 7vh;
+  padding-right:1vh;
 }
 
 #responseContainer {
@@ -285,7 +293,7 @@ body {
   border-radius: 4px;
   color:white;
   text-align: center;
-  font-size:9.5vh;
+  font-size:9vh;
 
 }
 
@@ -296,16 +304,29 @@ body {
 
 #bannedContainer {
   display: flex;
-  margin:3% 10% 0 10%;
+  margin:0% 0% 0% 10%;
   flex-wrap: wrap;
+  min-height: 20vh;
+  border-radius: 7px;
+  border: solid white 2px;
+  width: 80%;
+  background-color: #312f31;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
 
 .bannedAnswer {
   background-color: rgba(240, 248, 255, 0.527);
   color:black;
   font-size: 30px;
-  margin: 0 5px 5px 0;
-  width:auto;
+  height:40px;
+  margin: 2.5px 2.5px 2.5px 2.5px;
   padding:5px 10px;
   border-radius: 7px;
+}
+
+#bannedAnswerHeader {
+  margin: 0 0 0 10%;
+  font-size: 5vh;
+  color:white;
+
 }
