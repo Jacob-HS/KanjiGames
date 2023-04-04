@@ -133,6 +133,7 @@ function checkAnswer(){
   document.getElementById("score").innerHTML;
   if (answer == "s" || answer == "S" || answer == "ｓ" || answer == "Ｓ"){
     removeHeart();
+    correctTracker.push("answeredIncorrectly");
     return;
   }
   for(const kanji of answer){
