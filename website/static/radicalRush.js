@@ -125,6 +125,10 @@ function pickQuestion(){
   currentQuestion=candidate;
 } 
 
+function skip(){
+  removeHeart();
+  correctTracker.push("answeredIncorrectly");
+}
 
 function checkAnswer(){
   let answerElement=document.getElementById("answer");
@@ -132,8 +136,7 @@ function checkAnswer(){
   answerElement.value="";
   document.getElementById("score").innerHTML;
   if (answer == "s" || answer == "S" || answer == "ｓ" || answer == "Ｓ"){
-    removeHeart();
-    correctTracker.push("answeredIncorrectly");
+    skip();
     return;
   }
   for(const kanji of answer){
