@@ -28,3 +28,7 @@ def radicalRushTrial():
 @views.route('/kanjitori/mode-select')
 def kanjitoriModeSelect():
      return render_template("KTmodeSelect.html")
+
+@views.route('/kanjitori/vs-cpu')
+def kanjitoriCpu():
+          return "<p>Work in progress</p>"
