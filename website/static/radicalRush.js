@@ -12,11 +12,14 @@ let keys;
 let intervalID;
 let currentHearts=3;
 
-answer.addEventListener("keypress", function(event){
+answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
     checkAnswer();
   }
-})
+  if(event.key=="Escape"){
+    skip();
+  }
+});
 function tickDown(){
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
   document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)-1;
@@ -126,8 +129,9 @@ function pickQuestion(){
 } 
 
 function skip(){
-  removeHeart();
   correctTracker.push("answeredIncorrectly");
+  removeHeart();
+  
 }
 
 function checkAnswer(){
