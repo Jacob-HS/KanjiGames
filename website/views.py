@@ -7,6 +7,8 @@ with open("ComponentsToKanji.json",encoding = "utf-8") as answerfile:
 finalDifficulty=[]
 with open("FinalDifficulty.json",encoding = "utf-8") as answerfile:
         finalDifficulty=str(answerfile.read())
+with open("Endless.json",encoding = "utf-8") as answerfile:
+        endless=str(answerfile.read())
 @views.route('/')
 def home():
     return render_template("home.html")
@@ -17,7 +19,7 @@ def modeSelect():
 
 @views.route('/radical-rush/endless')
 def radicalRushEndless(): 
-    return render_template("radicalRushEndless.html", componentsToKanji=componentsToKanji)
+    return render_template("radicalRushEndless.html", componentsToKanji=endless)
 
 @views.route('/radical-rush/standard')
 def radicalRushTrial():
