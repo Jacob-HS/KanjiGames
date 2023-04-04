@@ -1,16 +1,16 @@
-var currentQuestion="";
-var difficultyLevel;
-var activeList;
-var maxScore;
-var maxTime;
-var poolSize;
-var poolFloor;
-var addedListener =false;
-var askedPool =[];
-var correctTracker=[];
-var keys;
-var intervalID;
-var currentHearts=3;
+let currentQuestion="";
+let difficultyLevel;
+let activeList;
+let maxScore;
+let maxTime;
+let poolSize;
+let poolFloor;
+let addedListener =false;
+let askedPool =[];
+let correctTracker=[];
+let keys;
+let intervalID;
+let currentHearts=3;
 
 answer.addEventListener("keypress", function(event){
   if(event.key=="Enter"){
@@ -27,7 +27,7 @@ function tickDown(){
 }
 
 function removeHeart(){
-  var heartContainer=document.getElementById("heartContainer");
+  let heartContainer=document.getElementById("heartContainer");
   heartContainer.classList.add("shake-horizontal");
   thisHeart=document.getElementById("heart"+currentHearts);
   thisHeart.className="fa fa-heart-o";
@@ -124,8 +124,8 @@ function pickQuestion(){
 
 
 function checkAnswer(){
-  var answerElement=document.getElementById("answer");
-  var answer=answerElement.value;
+  let answerElement=document.getElementById("answer");
+  let answer=answerElement.value;
   answerElement.value="";
   document.getElementById("score").innerHTML;
   for(const kanji of answer){
@@ -171,9 +171,9 @@ function displaySummary(win){
   generateSummaryAnswers();
 }
 function generateSummaryAnswers(){
-  var row;
-  var temp;
-  var kanji;
+  let row;
+  let temp;
+  let kanji;
   let i=0;
   summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
   for (let component of askedPool){
