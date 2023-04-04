@@ -13,6 +13,8 @@ let intervalID;
 let currentHearts=3;
 let currentResponse=1;
 
+
+
 answer.addEventListener("keypress", function(event){
   if(event.key=="Enter"){
     checkAnswer();

@@ -94,7 +94,7 @@ function setDiff(diff){
     keys = Object.keys(masterList);
   }
   if(difficultyLevel==4){
-    poolSize=504;
+    poolSize=503;
     poolFloor=0;
     maxScore="20";
     maxTime="15";
