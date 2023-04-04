@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Mode Select{% endblock %}
+
+{% block content %}
+<div class="modeHeader">Select Gamemode:</div>
+<div id="modeContainer">
+  <a style="text-decoration: none; display: inline-block;"href="/radical-rush/standard">
+    <div class="modeButton fade-in-bottom">
+      <p style="font-size: 5vh;">vs. CPU</p>
+      <hr style="width:80%">
+      <p style="text-align: left;">Answer with a jukugo starting with the final kanji in your opponents word before time runs out.</p>
+
+    </div>
+  </a>
+  <a style="text-decoration: none; display: inline-block;"href="/radical-rush/endless">
+    <div class="modeButton fade-in-bottom">
+      <p style="font-size: 5vh;">Vs. Friend</p>
+      <hr style="width:80%">
+      <p style="text-align: left;">Play vs. your friends!</p>
+  
+    </div>
+  </a>
+</div>
+{% endblock %}

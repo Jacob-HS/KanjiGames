@@ -74,7 +74,7 @@ function setDiff(diff){
   if (difficultyLevel==1){
     poolSize=50;
     poolFloor=0;
-    maxTime="15";
+    maxTime="20";
     activeList=masterList;
     keys = Object.keys(masterList);
 
@@ -83,7 +83,7 @@ function setDiff(diff){
     poolSize=150;
     poolFloor=20;
     maxScore="15";
-    maxTime="10";
+    maxTime="15";
     activeList=masterList;
     keys = Object.keys(masterList);
   }
@@ -91,7 +91,7 @@ function setDiff(diff){
     poolSize=334;
     poolFloor=170;
     maxScore="15";
-    maxTime="10";
+    maxTime="15";
     activeList=masterList;
     keys = Object.keys(masterList);
   }

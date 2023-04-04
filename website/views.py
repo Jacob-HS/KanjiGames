@@ -14,8 +14,8 @@ def home():
     return render_template("home.html")
 
 @views.route('/radical-rush/mode-select')
-def modeSelect():
-    return render_template("modeSelect.html")
+def radicalRushModeSelect():
+    return render_template("RRmodeSelect.html")
 
 @views.route('/radical-rush/endless')
 def radicalRushEndless(): 
@@ -24,3 +24,7 @@ def radicalRushEndless():
 @views.route('/radical-rush/standard')
 def radicalRushTrial():
     return render_template("radicalRush.html", componentsToKanji=componentsToKanji, finalDifficulty=finalDifficulty)
+
+@views.route('/kanjitori/mode-select')
+def kanjitoriModeSelect():
+     return render_template("KTmodeSelect.html")
