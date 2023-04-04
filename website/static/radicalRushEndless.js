@@ -128,6 +128,17 @@ function checkAnswer(){
   let answer=answerElement.value;
   answerElement.value="";
   document.getElementById("score").innerHTML;
+  if (answer == "s" || answer == "S" || answer == "ｓ" || answer == "Ｓ"){
+    if (currentResponse==1){
+      correctTracker.push("answeredIncorrectly");
+      removeHeart();
+    }else{
+      correctTracker.push("answeredCorrectly");
+      pickQuestion();
+      addTime();
+    }
+    
+  }
   for(const kanji of answer){
     if (bannedAnswerList.includes(kanji)){
       continue;
