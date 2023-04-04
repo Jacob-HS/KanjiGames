@@ -44,6 +44,9 @@ function removeHeart(){
 
 function addTime(){
   document.getElementById("timer").innerHTML=maxTime;
+  clearInterval(intervalID);
+  intervalID = setInterval(tickDown,1000);
+  
 }
 function makeGoAway(diff){
   let diffh = document.getElementById("diffh");
