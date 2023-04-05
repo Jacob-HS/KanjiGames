@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Kanji Games - Kanjitori (vs. CPU){% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<p class="difficulty-header" id="diffh">Select difficulty:</p>
+<div class="flex-container" id="myContainer">
+  <p class="game-button fade-in-bottom first" onclick="makeGoAway(2)">Normal</p>
+  <p class="game-button fade-in-bottom second" onclick="makeGoAway(3)">coming soon</p>
+  <p class="game-button fade-in-bottom third" onclick="makeGoAway(4)">coming soon</p>
+</div>   
+<div class="gameplayElement hidden" id="gameField">
+  <div class="side currentTurn" id="playerSide">
+    <p class="controllerHeader">You</p>
+    <div class="gameplayElement hidden scoreCounter" style="margin-top: 5%;">
+      <span id="score">0</span>
+    </div>
+    <div class="gameplayElement hidden" id="timer-container">
+      <p id="timer">20</p>
+    </div>
+    <p class="jukugoContainer"><span id="playerA"></span><span class="finalKanji" id="playerB"></span></p>
+    <div class="answerContainer">
+      <input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
+    </div>
+    
+  </div>
+
+  <div class="side" id="computerSide">
+    <p class="controllerHeader">CPU</p>
+    <div class="gameplayElement hidden scoreCounter" style="margin-top: 5%;">
+      <span style="opacity:0">0</span>
+    </div>
+    <div class="gameplayElement hidden" style="visibility: none;font-size: 8vh; font-weight: bold;">
+      <p style="margin: 6vh 0;opacity:0">0</p>
+    </div>
+    <p class="jukugoContainer"><span id="cpuA" style="display:inline-block"></span><span class="finalKanji" id="cpuB"></span></p>
+  </div>
+</div>
+<div class="summaryElement hidden" id="resultContainer">
+  <p class="summaryElement result hidden fade-in-bottom" id="result"></p>
+</div>
+<div class="summaryElement hidden" id="summaryButtonContainer" style="margin-bottom:5%">
+  <button type="button" id="retry" onclick="playAgain()">Play again</button>
+  <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
+</div>
+  <div id="summaryAnswerContainer"></div>
+<script>
+  let temp = '{{shiritoriAnswers}}';
+  let newtemp = temp.replace(/&#34;/g,'"');
+  let masterList=(JSON.parse(newtemp));
+  console.log(masterList)
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='kanjitoriCPU.js')}}"></script>
+
+{% endblock %}
