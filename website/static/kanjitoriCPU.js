@@ -170,7 +170,7 @@ function generateResponse(){
       if (!(temp in jukugoFreq)){
         continue;
       }
-      if (temp in askedPool){
+      if (answeredPool.includes(word)){
         continue;
       }
       if (parseInt(jukugoFreq[temp])<freqCap){
