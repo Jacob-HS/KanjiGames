@@ -175,6 +175,7 @@ function generateResponse(){
       }
       if (parseInt(jukugoFreq[temp])<freqCap){
         candidateList.push(word);
+        break;
       }
     }
     if (candidateList.length > maxCandidates){
@@ -185,6 +186,7 @@ function generateResponse(){
     endGame(true);
     return;
   }
+  console.log(candidateList);
   let finalAnswer = candidateList[Math.floor(Math.random()*candidateList.length)]
   currentQuestion=finalAnswer.slice(-1);
   shiftFocus("player");
