@@ -35,7 +35,7 @@ function setDiff(diff){
     maxCandidates=30;
   }
   if (diff == 2){
-    freqCap==20000
+    freqCap=20000
     maxCandidates=60;
   }
   if (diff == 3){
@@ -170,11 +170,11 @@ function generateResponse(){
       if (!(temp in jukugoFreq)){
         continue;
       }
-      if (answeredPool.includes(word)){
+      if (answeredPool.includes(temp)){
         continue;
       }
       if (parseInt(jukugoFreq[temp])<freqCap){
-        candidateList.push(temp);
+        candidateList.push(word);
       }
     }
     if (candidateList.length > maxCandidates){
