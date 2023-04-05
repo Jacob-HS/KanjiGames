@@ -10,12 +10,31 @@
 	-webkit-animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) reverse both;
 	        animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) reverse both;
 }
+@-webkit-keyframes pulsate-fwd{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.1);transform:scale(1.1)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes pulsate-fwd{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.1);transform:scale(1.1)}100%{-webkit-transform:scale(1);transform:scale(1)}}
+.pulsate-fwd {
+	-webkit-animation: pulsate-fwd 0.6s ease-in-out infinite both;
+	        animation: pulsate-fwd 0.6s ease-in-out infinite both;
+  color:rgb(197, 197, 21);
+  font-size: 6vw;
+}
 
 body {
   background-color: #1e1d1e;
+  margin: 0;
 
 }
-
+.first{
+  animation-delay: .2s;
+}
+.second{
+  animation-delay: .4s;
+}
+.third{
+  animation-delay: .6s;
+}
+.fourth{
+  animation-delay: .8s;
+}
 .modeHeader {
   text-align: center;
   width:100%;
@@ -126,6 +145,7 @@ body {
 .scoreCounter {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
+  margin-top:1%;
   color:white;
   font-size: 5vh;
 }
@@ -418,4 +438,62 @@ body {
     font-size: 10vw;
     margin-top: 3vh;
   }
+}
+
+#gameField {
+  display: flex;
+  height:100vh;
+  width:100vw;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.side{
+  width: 50%;
+  height: 100%;
+  border-radius: 0px;
+  transition-property: box-shadow;
+  transition-duration: 500ms;
+}
+
+#playerSide {
+  text-align: center;
+}
+#computerSide {
+  text-align: center;
+}
+.currentTurn{
+  box-shadow: 0px 0px 30px 10px rgb(255, 255, 255) inset;
+}
+
+.controllerHeader {
+  font-size: 8vh;
+  position:absolute;
+  margin: 2% 0 0 3%;
+  color:white;
+}
+
+.jukugoContainer {
+  font-size:9vw;
+  color:white;
+  margin-top: 6%;
+  margin-bottom: 25%;
+
+}
+.finalKanji {
+  color:magenta;
+  font-size:9vw;
+  margin-top: 6%;
+  margin-bottom: 25%;
+}
+
+#cpuAnswerHolder{
+  display: flex;
+  height:100%;
+  align-items: center;
+  justify-content: center;
+}
+.answerContainer {
+  position: absolute;
+  bottom:5%;
+  width:50%;
 }

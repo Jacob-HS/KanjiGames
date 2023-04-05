@@ -6,9 +6,11 @@ with open("ComponentsToKanji.json",encoding = "utf-8") as answerfile:
     componentsToKanji=str(answerfile.read())
 finalDifficulty=[]
 with open("FinalDifficulty.json",encoding = "utf-8") as answerfile:
-        finalDifficulty=str(answerfile.read())
+    finalDifficulty=str(answerfile.read())
 with open("Endless.json",encoding = "utf-8") as answerfile:
-        endless=str(answerfile.read())
+    endless=str(answerfile.read())
+with open("shiritoriAnswers.json", encoding="utf-8") as answerfile:
+     shiritoriAnswers=str(answerfile.read())   
 @views.route('/')
 def home():
     return render_template("home.html")
@@ -31,4 +33,4 @@ def kanjitoriModeSelect():
 
 @views.route('/kanjitori/vs-cpu')
 def kanjitoriCpu():
-          return "<p>Work in progress</p>"
+          return render_template("kanjitoriCPU.html", shiritoriAnswers=shiritoriAnswers)

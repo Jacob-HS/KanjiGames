@@ -209,11 +209,7 @@ function generateSummaryAnswers(){
         temp.appendChild(kanji);
         temp.classList.add("summaryElement","active","summaryAnswer");
         row.appendChild(temp);
-
       }
-
-
-
   }
 }
 
