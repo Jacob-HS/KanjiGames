@@ -50,7 +50,11 @@
   let temp = '{{shiritoriAnswers}}';
   let newtemp = temp.replace(/&#34;/g,'"');
   let masterList=(JSON.parse(newtemp));
-  console.log(masterList)
+  
+  temp = '{{jukugoFreq}}';
+  newtemp = temp.replace(/&#34;/g,'"');
+  let jukugoFreq=(JSON.parse(newtemp));
+  console.log(jukugoFreq);
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='kanjitoriCPU.js')}}"></script>
 

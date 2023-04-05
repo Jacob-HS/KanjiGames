@@ -105,18 +105,28 @@ function makeThink(){
 
 function generateResponse(){
   let candidateList=[];
+  let lastKanji;
   let aSlot= document.getElementById("cpuA");
   aSlot.innerHTML="";
   aSlot.classList.remove("pulsate-fwd");
   for (word of masterList[currentQuestion]){
+    lastKanji = word.slice(-1);
     if (answeredPool.includes(word)){
       continue;
     }
-    if (!word.slice(-1) in masterList){
+    if (!(lastKanji in masterList)){
       continue;
     }
-    candidateList.push(word);
-    if (candidateList.length > 2){
+    for (let temp of masterList[lastKanji]){
+      if (!(temp in jukugoFreq)){
+        continue;
+        
+      }
+      if (parseInt(jukugoFreq[temp])<25000){
+        candidateList.push(word);
+      }
+    }
+    if (candidateList.length > 10){
       break;
     }
   }

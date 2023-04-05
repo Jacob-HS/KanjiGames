@@ -10,7 +10,9 @@ with open("FinalDifficulty.json",encoding = "utf-8") as answerfile:
 with open("Endless.json",encoding = "utf-8") as answerfile:
     endless=str(answerfile.read())
 with open("shiritoriAnswers.json", encoding="utf-8") as answerfile:
-     shiritoriAnswers=str(answerfile.read())   
+     shiritoriAnswers=str(answerfile.read()) 
+with open("jukugoFreq.json", encoding="utf-8") as freqfile:
+     jukugoFreq=str(freqfile.read())     
 @views.route('/')
 def home():
     return render_template("home.html")
@@ -33,4 +35,4 @@ def kanjitoriModeSelect():
 
 @views.route('/kanjitori/vs-cpu')
 def kanjitoriCpu():
-          return render_template("kanjitoriCPU.html", shiritoriAnswers=shiritoriAnswers)
+          return render_template("kanjitoriCPU.html", shiritoriAnswers=shiritoriAnswers, jukugoFreq=jukugoFreq)
