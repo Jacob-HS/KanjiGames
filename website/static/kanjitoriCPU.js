@@ -109,9 +109,13 @@ function generateResponse(){
   aSlot.innerHTML="";
   aSlot.classList.remove("pulsate-fwd");
   for (word of masterList[currentQuestion]){
-    if (!answeredPool.includes(word) && (masterList[word.slice(-1)]).length>0){
-      candidateList.push(word);
+    if (answeredPool.includes(word)){
+      continue;
     }
+    if (!word.slice(-1) in masterList){
+      continue;
+    }
+    candidateList.push(word);
     if (candidateList.length > 2){
       break;
     }
@@ -210,6 +214,7 @@ function resetGame(){
   document.getElementById("score").innerHTML=0;
   document.getElementById("answer").value="";
   document.getElementById("timer").innerHTML="20";
+  document.getElementById("summaryAnswerContainer").innerHTML="";
 }
 function playAgain(){
   resetGame();
