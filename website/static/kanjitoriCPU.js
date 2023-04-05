@@ -2,6 +2,7 @@ let currentQuestion="";
 let answeredPool = [];
 let addedListener=false;
 let intervalID;
+let freqCap;
 document.getElementById("answer").addEventListener("keydown", function(event){
   if(event.key=="Enter"){
     checkAnswer();
@@ -167,6 +168,9 @@ function generateResponse(){
     }
     for (let temp of masterList[lastKanji]){
       if (!(temp in jukugoFreq)){
+        continue;
+      }
+      if (temp in askedPool){
         continue;
       }
       if (parseInt(jukugoFreq[temp])<freqCap){
