@@ -149,7 +149,10 @@ body {
   color:white;
   font-size: 5vh;
 }
-
+#score{
+  transition-property: color,font-size;
+  transition-duration: 1s;
+}
 .summaryAnswerRow {
   display:flex;
   flex-wrap: wrap;
@@ -475,7 +478,7 @@ body {
 .jukugoContainer {
   font-size:9vw;
   color:white;
-  margin-top: 6%;
+  margin-top: 16%;
   margin-bottom: 25%;
 
 }
@@ -497,3 +500,8 @@ body {
   bottom:5%;
   width:50%;
 }
+.level1{color:green;font-size: 6vh;}
+.level2{color:yellowgreen;font-size: 7vh;}
+.level3{color: rgb(189, 0, 0);font-size: 8vh;}
+.level4{color:rgb(255, 235, 17);font-size: 9vh;}
+.level5{color:aqua; font-size: 11vh;}

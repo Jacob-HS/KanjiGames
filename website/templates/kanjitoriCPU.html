@@ -7,14 +7,14 @@
 
 <p class="difficulty-header" id="diffh">Select difficulty:</p>
 <div class="flex-container" id="myContainer">
-  <p class="game-button fade-in-bottom first" onclick="makeGoAway(2)">Normal</p>
-  <p class="game-button fade-in-bottom second" onclick="makeGoAway(3)">coming soon</p>
-  <p class="game-button fade-in-bottom third" onclick="makeGoAway(4)">coming soon</p>
+  <p class="game-button fade-in-bottom first" onclick="makeGoAway(1)">Easy</p>
+  <p class="game-button fade-in-bottom second" onclick="makeGoAway(2)">Normal</p>
+  <p class="game-button fade-in-bottom third" onclick="makeGoAway(3)">Hard</p>
 </div>   
 <div class="gameplayElement hidden" id="gameField">
   <div class="side currentTurn" id="playerSide">
     <p class="controllerHeader">You</p>
-    <div class="gameplayElement hidden scoreCounter" style="margin-top: 5%;">
+    <div class="gameplayElement hidden scoreCounter" style="margin: 13% 0 0 7%; float: left">
       <span id="score">0</span>
     </div>
     <div class="gameplayElement hidden" id="timer-container">
@@ -29,9 +29,6 @@
 
   <div class="side" id="computerSide">
     <p class="controllerHeader">CPU</p>
-    <div class="gameplayElement hidden scoreCounter" style="margin-top: 5%;">
-      <span style="opacity:0">0</span>
-    </div>
     <div class="gameplayElement hidden" style="visibility: none;font-size: 8vh; font-weight: bold;">
       <p style="margin: 6vh 0;opacity:0">0</p>
     </div>
@@ -54,7 +51,6 @@
   temp = '{{jukugoFreq}}';
   newtemp = temp.replace(/&#34;/g,'"');
   let jukugoFreq=(JSON.parse(newtemp));
-  console.log(jukugoFreq);
 </script>
 <script type="text/javascript" src="{{url_for('static',filename='kanjitoriCPU.js')}}"></script>
 

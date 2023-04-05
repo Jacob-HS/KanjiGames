@@ -16,6 +16,7 @@ function makeGoAway(diff){
   let container= document.getElementById("myContainer");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
+  setDiff(diff);
   if (!addedListener){
     addedListener=true;
     diffh.addEventListener("transitionend", () =>
@@ -26,13 +27,27 @@ function makeGoAway(diff){
     })
   }
 }
+
+function setDiff(diff){
+  if (diff == 1){
+    freqCap=10000;
+    maxCandidates=30;
+  }
+  if (diff == 2){
+    freqCap==20000
+    maxCandidates=60;
+  }
+  if (diff == 3){
+    freqCap=30000
+    maxCandidates=100;
+  }
+}
 function startGame(){
   let gameplayElements = document.getElementsByClassName("gameplayElement");
   for (let element of gameplayElements){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
-  console.log("start");
   shiftFocus("cpu");
   generateFirstQuestion();
   document.getElementById("answer").focus();
@@ -46,17 +61,31 @@ function tickDown(){
 }
 function generateFirstQuestion(){
   let question;
-  while(true){
-    let a = Object.keys(masterList)[Math.floor(Math.random()*10)]
-    let b = Math.floor(Math.random()*10);
-
-    question=masterList[a][b];
-    if (masterList[question.slice(-1)].length > 2){
-      break;
+  let searching=true;
+  while(searching){
+    let a = Object.keys(masterList)[Math.floor(Math.random()*100)];
+    for (word of masterList[a]){
+      lastKanji = word.slice(-1);
+      if (!(lastKanji in masterList)){
+        continue;
+      }
+      for (let temp of masterList[lastKanji]){
+        if (!(temp in jukugoFreq)){
+          continue;
+        }
+        if (parseInt(jukugoFreq[temp])<freqCap){
+          question=word;
+          searching=false;
+          break;
+        }
+      }
+      if (question){
+        break;
+      }
     }
   }
   currentQuestion=question[question.length-1];
-  console.log(currentQuestion);
+  answeredPool.push(question);
   displayAnswer(question, "cpu");
   shiftFocus("player");
 }
@@ -88,6 +117,7 @@ function checkAnswer(){
   }
   if(masterList[currentQuestion].includes(answer)){
     document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
+    updateColor();
     displayAnswer(answer, "player");
     currentQuestion=answer.slice(-1);
     shiftFocus("cpu");
@@ -96,7 +126,25 @@ function checkAnswer(){
     setTimeout(generateResponse, 2000);
   }
 }
-
+function updateColor(){
+  scoreElement=document.getElementById("score");
+  scoreNumber=parseInt(scoreElement.innerHTML);
+  if(scoreNumber==10){
+    scoreElement.classList.add("level1");
+  }
+  if(scoreNumber==25){
+    scoreElement.classList.add("level2");
+  }
+  if(scoreNumber==50){
+    scoreElement.classList.add("level3");
+  }
+  if(scoreNumber==75){
+    scoreElement.classList.add("level4");
+  }
+  if(scoreNumber==100){
+    scoreElement.classList.add("level5");
+  }
+}
 function makeThink(){
   let aSlot = document.getElementById("cpuA");
   aSlot.classList.add("pulsate-fwd");
@@ -120,13 +168,12 @@ function generateResponse(){
     for (let temp of masterList[lastKanji]){
       if (!(temp in jukugoFreq)){
         continue;
-        
       }
-      if (parseInt(jukugoFreq[temp])<25000){
-        candidateList.push(word);
+      if (parseInt(jukugoFreq[temp])<freqCap){
+        candidateList.push(temp);
       }
     }
-    if (candidateList.length > 10){
+    if (candidateList.length > maxCandidates){
       break;
     }
   }
@@ -168,7 +215,6 @@ function shiftFocus(target){
 }
 
 function endGame(win){
-  console.log("stop");
   clearInterval(intervalID);
   let gameplayElements = document.getElementsByClassName("gameplayElement");
   for (let element of gameplayElements){
@@ -184,9 +230,9 @@ function endGame(win){
 function displaySummary(win){
   result=document.getElementById("result");
   if (win){
-    result.innerHTML="Victory!";
+    result.innerHTML="No remaining words.<br>"+document.getElementById("score")+"pts.";
   }else {
-    result.innerHTML="Defeat."
+    result.innerHTML="Defeat.<br>"+document.getElementById("score").innerHTML+"pts.";
   }
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
@@ -221,6 +267,7 @@ function resetGame(){
     element.classList.add("hidden");
   }
   answeredPool=[];
+  document.getElementById("score").className="";
   document.getElementById("score").innerHTML=0;
   document.getElementById("answer").value="";
   document.getElementById("timer").innerHTML="20";
