@@ -532,9 +532,10 @@ body {
     display: none !important;
   }
   .answerContainer {
-    position: absolute;
-    bottom:5%;
-    width:100%;
+    bottom:40%;
+    width:50%;
+    margin-left:25%;
+    margin-right:25%;
   }
   .jukugoContainer {
     font-size:9vh;
@@ -543,5 +544,9 @@ body {
   }
   .controllerHeader {
     font-size: 5vh;
+  }
+  #timer-container {
+    position: absolute;
+    top: 0;
   }
 }
