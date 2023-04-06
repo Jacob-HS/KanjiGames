@@ -1,0 +1,31 @@
+@media only screen and (max-width: 768px) {
+  #gameField {
+    height:100%;
+    flex-direction: column-reverse;
+  }
+  .side{
+    width: 100vw;
+    height: 50vh;
+  }
+  .answerContainer {
+    bottom:50vh;
+    width:50%;
+    margin-left:25%;
+    margin-right:25%;
+  }
+  #answer{
+    margin:0;
+  }
+  .jukugoContainer {
+    font-size:9vh;
+    margin-top: 10%;
+
+  }
+  .controllerHeader {
+    font-size: 5vh;
+  }
+  #timer-container {
+    position: absolute;
+    top: 0;
+  }
+}
