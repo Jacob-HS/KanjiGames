@@ -532,7 +532,7 @@ body {
     display: none !important;
   }
   .answerContainer {
-    bottom:40%;
+    bottom:40vh;
     width:50%;
     margin-left:25%;
     margin-right:25%;
