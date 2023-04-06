@@ -522,6 +522,7 @@ body {
     margin-top: 3vh;
   }
   #gameField {
+    height:100%;
     flex-direction: column-reverse;
   }
   .side{
