@@ -532,10 +532,13 @@ body {
     display: none !important;
   }
   .answerContainer {
-    bottom:40vh;
+    bottom:53vh;
     width:50%;
     margin-left:25%;
     margin-right:25%;
+  }
+  #answer{
+    margin:0;
   }
   .jukugoContainer {
     font-size:9vh;
