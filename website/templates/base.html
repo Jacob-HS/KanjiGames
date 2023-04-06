@@ -12,8 +12,8 @@
 </head>
 <title>{% block title %}This shouldnt display{% endblock %}</title>
 
-<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}"
-
+<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body>
 
   {% block content %} {% endblock %}

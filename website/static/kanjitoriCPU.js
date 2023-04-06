@@ -15,6 +15,9 @@ document.getElementById("answer").addEventListener("keydown", function(event){
 function makeGoAway(diff){
   let diffh = document.getElementById("diffh");
   let container= document.getElementById("myContainer");
+  let homeButtons=document.getElementsByClassName("homeButton");
+  homeButtons[0].classList.remove("active");
+  homeButtons[0].classList.add("hidden");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
   setDiff(diff);
@@ -236,9 +239,9 @@ function endGame(win){
 function displaySummary(win){
   result=document.getElementById("result");
   if (win){
-    result.innerHTML="No remaining words.<br>"+document.getElementById("score")+"pts.";
+    result.innerHTML="No remaining words<br>"+document.getElementById("score").innerHTML+"pts";
   }else {
-    result.innerHTML="Defeat.<br>"+document.getElementById("score").innerHTML+"pts.";
+    result.innerHTML="Defeat<br>"+document.getElementById("score").innerHTML+"pts";
   }
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
@@ -248,24 +251,31 @@ function displaySummary(win){
 }
 
 function generateSummaryAnswers(){
-  summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
-    row=document.createElement("div");
-    temp=document.createElement("p");
-    kanji=document.createTextNode(currentQuestion);
+  let summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
+  let row=document.createElement("div");
+  let temp=document.createElement("a");
+  let kanji=document.createTextNode(document.getElementById("cpuA").innerHTML+document.getElementById("cpuB").innerHTML);
+  temp.appendChild(kanji);
+  linkify(temp);
+  temp.classList.add("summaryElement","active","summaryComponent", "answeredIncorrectly");
+  row.appendChild(temp);
+  summaryAnswerContainer.appendChild(row);
+  row.classList.add("summaryElement","active", "summaryAnswerRow");
+  for(let i=0;i<Math.min(masterList[currentQuestion].length,5);i++){
+    temp=document.createElement("a");
+    kanji=document.createTextNode(masterList[currentQuestion][i]);
     temp.appendChild(kanji);
-    temp.classList.add("summaryElement","active","summaryComponent", "answeredIncorrectly");
+    linkify(temp);
+    temp.classList.add("summaryElement","active","summaryAnswer");
     row.appendChild(temp);
-    summaryAnswerContainer.appendChild(row);
-    row.classList.add("summaryElement","active", "summaryAnswerRow");
-
-      for(let i=0;i<Math.min(masterList[currentQuestion].length,5);i++){
-        temp=document.createElement("p");
-        kanji=document.createTextNode(masterList[currentQuestion][i]);
-        temp.appendChild(kanji);
-        temp.classList.add("summaryElement","active","summaryAnswer");
-        row.appendChild(temp);
-      }
+  }
 }
+
+function linkify(node){
+  node.href="https://www.weblio.jp/content/"+node.innerHTML;
+  node.target="_blank";
+}
+
 function resetGame(){
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
@@ -287,6 +297,8 @@ function changeDifficulty(){
   resetGame();
   let diffh = document.getElementById("diffh");
   let container= document.getElementById("myContainer");
+  let homeButtons=document.getElementsByClassName("homeButton");
+  homeButtons[0].classList.remove("hidden");
   diffh.classList.remove("goAway","hidden");
   container.classList.remove("goAway","hidden");
 

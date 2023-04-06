@@ -60,6 +60,8 @@ function addTime(){
 function makeGoAway(diff){
   let diffh = document.getElementById("diffh");
   let container= document.getElementById("myContainer");
+  let homeButtons=document.getElementsByClassName("homeButton");
+  homeButtons[0].classList.add("hidden");
   diffh.classList.add("goAway");
   container.classList.add("goAway");
   setDiff(diff)
@@ -260,6 +262,7 @@ function changeDifficulty(){
   let container= document.getElementById("myContainer");
   diffh.classList.remove("goAway","hidden");
   container.classList.remove("goAway","hidden");
+  homeButtons[0].classList.remove("hidden");
 
 
 }

@@ -3,8 +3,9 @@
 {% block title %}Kanji Games - Radical Rush (Endless Mode){% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<a class="homeButton active" href="/">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
 <p class="difficulty-header" id="diffh">Select difficulty:</p>
 <div class="flex-container" id="myContainer">
   <a class="game-button fade-in-bottom first" href="#" onclick="makeGoAway(1)">Easy</a>
@@ -52,7 +53,9 @@
 <input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
 <p class="gameplayElement hidden" id="bannedAnswerHeader">Banned answers:</p>
 <div class="gameplayElement hidden" id="bannedContainer"></div>
-
+<a class="homeButton summaryElement hidden" href="/">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
 <div class="summaryElement hidden" id="resultContainer">
   <p class="summaryElement result hidden fade-in-bottom" id="result"></p>
 </div>
