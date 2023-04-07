@@ -231,9 +231,26 @@ function endGame(win){
     element.classList.add("hidden");
   }
   displaySummary(win);
+  generateHistory();
   if(!win){
     generateSummaryAnswers();
   }
+}
+function generateHistory(){
+  let gameHistoryContainer=document.getElementsByClassName("gameHistoryContainer")[0];
+  let row=document.createElement("div");
+  let temp;
+  row.classList.add("summaryElement","active", "summaryAnswerRow");
+  gameHistoryContainer.appendChild(row);
+  for(let word of answeredPool){
+    temp=document.createElement("a");
+    kanji=document.createTextNode(word);
+    temp.appendChild(kanji);
+    linkify(temp);
+    temp.classList.add("summaryElement","active","summaryAnswer");
+    row.appendChild(temp);
+  }
+
 }
 
 function displaySummary(win){
@@ -301,6 +318,14 @@ function changeDifficulty(){
   homeButtons[0].classList.remove("hidden");
   diffh.classList.remove("goAway","hidden");
   container.classList.remove("goAway","hidden");
-
-
+}
+function toggleHistory(){
+  let history = document.getElementsByClassName("gameHistoryContainer")[0];
+  if (history.classList.contains("active")){
+    history.classList.remove("active");
+    history.classList.add("hidden");
+  }else{
+    history.classList.remove("hidden");
+    history.classList.add("active");
+  }
 }

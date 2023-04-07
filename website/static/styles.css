@@ -434,7 +434,15 @@ body {
 .level3{color: rgb(189, 0, 0);font-size: 8vh;}
 .level4{color:rgb(255, 235, 17);font-size: 9vh;}
 .level5{color:aqua; font-size: 11vh;}
-
+.historyHeader {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3vw;
+  color:white;
+}
+.gameHistoryContainer{
+  transition: display 1s;
+}
 @media only screen and (max-width: 768px) {
   .flex-container {
     margin: 0 5%;

@@ -19,7 +19,7 @@
       <span id="score">0</span>
     </div>
     <div class="gameplayElement hidden" id="timer-container">
-      <p id="timer">20</p>
+      <p id="timer">2</p>
     </div>
     <p class="jukugoContainer"><span id="playerA"></span><span class="finalKanji" id="playerB"></span></p>
     <div class="answerContainer">
@@ -47,6 +47,10 @@
   <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
 </div>
   <div id="summaryAnswerContainer"></div>
+  <div class="summaryElement hidden historyHeader">
+    <p>Full answer history:</p>
+  </div>
+  <div class="summaryElement hidden gameHistoryContainer"></div>
 <script>
   let temp = '{{shiritoriAnswers}}';
   let newtemp = temp.replace(/&#34;/g,'"');
