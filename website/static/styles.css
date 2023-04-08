@@ -468,8 +468,8 @@ body {
 #timerBar{
   background-color: white;
   height:100%;
-  width:0%;
-  transition: width 25s linear;
+  width:100%;
+  transition: width 1s linear;
 }
 
 path {

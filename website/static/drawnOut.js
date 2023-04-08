@@ -3,6 +3,7 @@ let intervalID;
 let addedListener=false;
 let keys;
 let currentQuestion;
+let timerInterval;
 const correctTracker=[];
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
@@ -52,14 +53,14 @@ function startGame(){
   pickQuestion();
   document.getElementById("answer").focus();
 }
-
 function tickDown(){
-  if (document.getElementById("timer").innerHTML=="20"){
+  let time = document.getElementById("timer").innerHTML
+  if (time=="20"){
     startPathAppearance();
     //document.getElementById("timerBar").style.width="100%";
   }
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
-  document.getElementById("timer").innerHTML=parseInt(document.getElementById("timer").innerHTML)-1;
+  document.getElementById("timer").innerHTML=parseInt(time)-1;
   if (document.getElementById("timer").innerHTML =="0"){
     correctTracker.push("answeredIncorrectly");
     removeHeart();
@@ -97,13 +98,17 @@ function pickQuestion(){
   hidePaths();
   setPathAppearTime();
 
-  document.getElementById("timerBar").style.transition="width 25s";
-  document.getElementById("timerBar").classList.add("activeTimer");
+
 }
 function smushSvgs(){
   svgs = document.getElementsByTagName("svg");
   wordLength=svgs.length;
-  const viewBoxBoi=[["-5 0 109 109","5 0 109 109"],["-5 0 109 109","0 0 109 109","5 0 109 109"],["-15 0 109 109","-5 0 109 109","5 0 109 109","15 0 109 109"],["-20 0 109 109","-10 0 109 109","0 0 109 109","10 0 109 109","20 0 109 109"]];
+  const viewBoxBoi=
+  [["-5 0 109 109","5 0 109 109"],
+  ["-5 0 109 109","0 0 109 109","5 0 109 109"],
+  ["-15 0 109 109","-5 0 109 109","5 0 109 109","15 0 109 109"],
+  ["-20 0 109 109","-10 0 109 109","0 0 109 109","10 0 109 109","20 0 109 109"]
+  ];
   let i=0;
   for (const svg of svgs){
     svg.setAttribute("viewBox",viewBoxBoi[wordLength-2][i]);
@@ -121,7 +126,7 @@ function setPathAppearTime(){
   console.log("start of set path");
   paths = document.getElementsByTagName("path");
   let i=1;
-  let j=0;
+  let j=1;
   arr=getRandomArray(paths.length);
   firstHalf=5/(parseFloat(paths.length)*.4);
   secondHalf=15/(parseFloat(paths.length)*.6);
