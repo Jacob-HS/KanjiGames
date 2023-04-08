@@ -120,21 +120,22 @@ function startPathAppearance(){
 function setPathAppearTime(){
   console.log("start of set path");
   paths = document.getElementsByTagName("path");
-  let i=0;
+  let i=1;
   let j=0;
   arr=getRandomArray(paths.length);
-  firstHalf=5/(parseFloat(paths.length)/2);
-  secondHalf=15/(parseFloat(paths.length)/2);
+  firstHalf=5/(parseFloat(paths.length)*.4);
+  secondHalf=15/(parseFloat(paths.length)*.6);
   console.log(firstHalf);
   console.log(secondHalf);
   for (const num of arr){
     if (i<(paths.length)/2){
-      paths[num].style.transitionDelay=firstHalf*i+"s";
+      paths[num].style.transitionDelay=+"s";
+      i++;
     } else{
-      paths[num].style.transitionDelay=5.5+(secondHalf*(j))+"s";
+      paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
-    i++;
+    
   }
   console.log("end of set path");
 }
