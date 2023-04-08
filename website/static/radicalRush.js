@@ -178,9 +178,15 @@ function endGame(win){
 function displaySummary(win){
   result=document.getElementById("result");
   if (win){
-    result.innerHTML="Victory!";
+    if (currentHearts==3){
+      result.innerHTML="Flawless";
+    }
+    else{
+      result.innerHTML="Victory!";
+    }
+    
   }else {
-    result.innerHTML="Defeat."
+    result.innerHTML="Defeat"
   }
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
