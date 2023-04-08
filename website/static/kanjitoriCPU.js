@@ -330,11 +330,11 @@ function toggleHistory(){
   if (history.classList.contains("active")){
     history.classList.remove("active");
     history.classList.add("hidden");
-    document.getElementById("historyText").innerHTML="Click to reveal full hisotry";
+    document.getElementById("historyText").innerHTML="Click to reveal full history";
   }else{
     history.classList.remove("hidden");
     history.classList.add("active");
     history.scrollIntoView(true);
-    document.getElementById("historyText").innerHTML="Click to hide full hisotry";
+    document.getElementById("historyText").innerHTML="Click to hide full history";
   }
 }
