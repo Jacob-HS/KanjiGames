@@ -34,7 +34,7 @@ function setDiff(diff){
   difficultyLevel=diff;
 
   if (difficultyLevel==1){
-    maxTime="25";
+    maxTime="20";
     keys=Object.keys(masterList);
   }
 }
@@ -54,7 +54,7 @@ function startGame(){
 }
 
 function tickDown(){
-  if (document.getElementById("timer").innerHTML=="25"){
+  if (document.getElementById("timer").innerHTML=="20"){
     startPathAppearance();
     //document.getElementById("timerBar").style.width="100%";
   }
@@ -121,9 +121,19 @@ function setPathAppearTime(){
   console.log("start of set path");
   paths = document.getElementsByTagName("path");
   let i=0;
+  let j=0;
   arr=getRandomArray(paths.length);
+  firstHalf=5/(parseFloat(paths.length)/2);
+  secondHalf=15/(parseFloat(paths.length)/2);
+  console.log(firstHalf);
+  console.log(secondHalf);
   for (const num of arr){
-    paths[num].style.transitionDelay=1*i+"s";
+    if (i<(paths.length)/2){
+      paths[num].style.transitionDelay=firstHalf*i+"s";
+    } else{
+      paths[num].style.transitionDelay=5.5+(secondHalf*(j))+"s";
+      j++;
+    }
     i++;
   }
   console.log("end of set path");
