@@ -438,7 +438,14 @@ body {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 3vw;
+  position: absolute;
+  width: 100%;
+  top: 87%;
+  margin-bottom: 0;
   color:white;
+}
+.historyHeader p{
+  position: relative;
 }
 .gameHistoryContainer{
   transition: display 1s;

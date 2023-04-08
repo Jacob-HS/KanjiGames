@@ -262,6 +262,9 @@ function displaySummary(win){
   }
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
+    if (element.classList.contains("gameHistoryContainer")){
+      continue;
+    }
     element.classList.remove("hidden");
     element.classList.add("active");
   }
@@ -305,6 +308,9 @@ function resetGame(){
   document.getElementById("answer").value="";
   document.getElementById("timer").innerHTML="20";
   document.getElementById("summaryAnswerContainer").innerHTML="";
+
+  gameHistoryContainer = document.getElementsByClassName("gameHistoryContainer")[0];
+  gameHistoryContainer.innerHTML="";
 }
 function playAgain(){
   resetGame();
@@ -324,8 +330,11 @@ function toggleHistory(){
   if (history.classList.contains("active")){
     history.classList.remove("active");
     history.classList.add("hidden");
+    document.getElementById("historyText").innerHTML="Click to reveal full hisotry";
   }else{
     history.classList.remove("hidden");
     history.classList.add("active");
+    history.scrollIntoView(true);
+    document.getElementById("historyText").innerHTML="Click to hide full hisotry";
   }
 }

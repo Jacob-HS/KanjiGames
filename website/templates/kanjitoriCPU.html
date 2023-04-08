@@ -47,10 +47,11 @@
   <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
 </div>
   <div id="summaryAnswerContainer"></div>
-  <div class="summaryElement hidden historyHeader">
-    <p>Full answer history:</p>
+  <div class="summaryElement hidden historyHeader" onclick="toggleHistory()">
+    <p id="historyText">Click to reveal full hisotry</p>
+    <div class="summaryElement hidden gameHistoryContainer"></div>
   </div>
-  <div class="summaryElement hidden gameHistoryContainer"></div>
+  
 <script>
   let temp = '{{shiritoriAnswers}}';
   let newtemp = temp.replace(/&#34;/g,'"');
