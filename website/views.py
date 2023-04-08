@@ -10,9 +10,14 @@ with open("FinalDifficulty.json",encoding = "utf-8") as answerfile:
 with open("Endless.json",encoding = "utf-8") as answerfile:
     endless=str(answerfile.read())
 with open("shiritoriAnswers.json", encoding="utf-8") as answerfile:
-     shiritoriAnswers=str(answerfile.read()) 
+    shiritoriAnswers=str(answerfile.read()) 
 with open("jukugoFreq.json", encoding="utf-8") as freqfile:
-     jukugoFreq=str(freqfile.read())     
+    jukugoFreq=str(freqfile.read())     
+with open("svgjson.json","r",encoding="utf-8") as svgfile:
+    svgs=json.load(svgfile)
+with open("vnJukugo.json","r",encoding="utf-8") as svgfile:
+    vnJukugo=json.load(svgfile)
+
 @views.route('/')
 def home():
     return render_template("home.html")
@@ -31,8 +36,16 @@ def radicalRushTrial():
 
 @views.route('/kanjitori/mode-select')
 def kanjitoriModeSelect():
-     return render_template("KTmodeSelect.html")
+    return render_template("KTmodeSelect.html")
 
 @views.route('/kanjitori/vs-cpu')
 def kanjitoriCpu():
-          return render_template("kanjitoriCPU.html", shiritoriAnswers=shiritoriAnswers, jukugoFreq=jukugoFreq)
+    return render_template("kanjitoriCPU.html", shiritoriAnswers=shiritoriAnswers, jukugoFreq=jukugoFreq)
+
+@views.route('/drawn-out/mode-select')
+def drawnOutModeSelect():
+    return render_template("DOModeSelect.html")
+
+@views.route('drawn-out/standard')
+def drawnOutStandard():
+    return render_template("drawnOut.html", kanjisvgs=svgs, vnJukugo=vnJukugo)

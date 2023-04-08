@@ -119,9 +119,7 @@ function startGame(){
   document.getElementById("answer").focus();
 }
 function pickQuestion(){
-  do{
-    candidate= keys[Math.floor((poolSize-poolFloor) * Math.random())+poolFloor ];
-  } while (askedPool.includes(candidate));
+  candidate= keys[Math.floor((poolSize-poolFloor) * Math.random())+poolFloor ];
   askedPool.push(candidate);
   document.getElementById("currRadical").innerHTML=candidate;
   currentQuestion=candidate;

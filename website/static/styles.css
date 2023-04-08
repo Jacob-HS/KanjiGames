@@ -224,6 +224,11 @@ body {
   margin: 0px 30% 0 30%;
   text-align: center;
 }
+#svg-container {
+  display:flex;
+  justify-content: center;
+  text-align: center;
+}
 #currRadical {
   color: rgb(247, 247, 247);
   font-size: 15vh;
@@ -372,6 +377,7 @@ body {
 #bannedAnswerHeader {
   margin: 0 0 0 10%;
   font-size: 5vh;
+  font-family: Arial, Helvetica, sans-serif;
   color:white;
 
 }
@@ -452,6 +458,29 @@ body {
 }
 .gameHistoryContainer{
   transition: display 1s;
+}
+.hiddenPath{
+  opacity:0;
+}
+.activePath{
+  opacity: 1;
+}
+#timerBar{
+  background-color: white;
+  height:100%;
+  width:0%;
+  transition: width 25s linear;
+}
+
+path {
+  transition: opacity 1s;
+}
+svg {
+  width: 20vw !important;
+  height: 20vw !important;
+}
+svg g{
+  stroke: rgb(198, 198, 198);
 }
 @media only screen and (max-width: 768px) {
   .flex-container {

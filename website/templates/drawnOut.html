@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Kanji Games - Drawn Out (Standard Mode){% endblock %}
+
+{% block content %}
+<a class="homeButton active" href="/">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
+<p class="difficulty-header" id="diffh">Select difficulty:</p>
+<div class="flex-container" id="myContainer">
+  <a class="game-button fade-in-bottom first" href="#" onclick="makeGoAway(1)">Easy</a>
+  <div class="tooltip">
+    <p>Question Pool: Kyoiku</p>
+    <p>Time Limit: 25s</p>
+  </div>
+  <a class="game-button fade-in-bottom second" href="#" onclick="makeGoAway(2)">Normal</a>
+  <div class="tooltip">
+  </div>
+  <a class="game-button fade-in-bottom third" href="#" onclick="makeGoAway(3)">Hard</a>
+  <div class="tooltip">
+  </div>
+</div>   
+
+<div class="gameplayElement hidden scoreCounter">
+  <span id="score">0</span>
+</div>
+<div class ="gameplayElement hidden" id="progressBarContainer">
+  <div id="timerBar"></div>
+</div>
+<div class="gameplayElement hidden" id="timer-container">
+  <p id="timer">10</p>
+</div>
+
+<div class="gameplayElement hidden" id="heartContainer">
+  <i class="fa fa-heart" id="heart1"></i><i class="fa fa-heart" id="heart2"></i><i class="fa fa-heart" id="heart3"></i>
+</div>
+
+<div class="gameplayElement hidden" id="svg-container">
+  
+</div>
+<input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
+<a class="homeButton summaryElement hidden" href="/">
+  <i class="fa fa-home" aria-hidden="true"></i>
+</a>
+<div class="summaryElement hidden" id="resultContainer">
+  <p class="summaryElement result hidden fade-in-bottom" id="result"></p>
+</div>
+
+<div class="summaryElement hidden" id="summaryButtonContainer">
+  <button type="button" id="retry" onclick="playAgain()">Play again</button>
+  <button type="button" id="changeDiff" onclick="changeDifficulty()">Change difficulty</button>
+</div>
+<div class="summaryElement hidden" id="answerHeaderContainer">
+  <p id="answerHeader">Answers:</p>
+</div>
+<div id="summaryAnswerContainer"></div>
+<script>
+  let masterList = {{ kanjisvgs | tojson }};
+  let vnJukugo = {{ vnJukugo | tojson }};
+  console.log(vnJukugo);
+  //let newtemp = temp.replace(/&#34;/g,'"');
+  //let newnewtemp= newtemp.replace(/&gt;/g,'>');
+  //let newnewnewtemp= newnewtemp.replace(/&lt;/g,'<');
+
+  
+//
+  //temp = '{{finalDifficulty}}';
+  //newtemp = temp.replace(/&#34;/g,'"');
+  //let finalDifficulty=(JSON.parse(newtemp));
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='drawnOut.js')}}"></script>
+
+{% endblock %}
