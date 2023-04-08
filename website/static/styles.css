@@ -243,7 +243,9 @@ body {
   color: white;
   font-size: 5vh;
 }
-
+.played {
+  background-color: rgb(0, 153, 209);
+}
 #result {
   color:white;
   text-align: center;

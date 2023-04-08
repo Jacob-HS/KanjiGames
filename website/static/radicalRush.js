@@ -7,6 +7,7 @@ let poolSize;
 let poolFloor;
 let addedListener =false;
 let askedPool =[];
+let answeredPool=[];
 let correctTracker=[];
 let keys;
 let intervalID;
@@ -149,6 +150,7 @@ function checkAnswer(){
     
     
     if (activeList[currentQuestion].includes(kanji)){
+      answeredPool.push(kanji);
       correctTracker.push("answeredCorrectly");
       document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
       if (document.getElementById("score").innerHTML==maxScore){
@@ -210,6 +212,9 @@ function generateSummaryAnswers(){
         kanji=document.createTextNode(activeList[component][i]);
         temp.appendChild(kanji);
         temp.classList.add("summaryElement","active","summaryAnswer");
+        if (answeredPool.includes(temp.innerHTML)){
+          temp.classList.add("played");
+        }
         row.appendChild(temp);
       }
   }
