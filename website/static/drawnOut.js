@@ -129,7 +129,7 @@ function setPathAppearTime(){
   console.log(secondHalf);
   for (const num of arr){
     if (i<(paths.length)/2){
-      paths[num].style.transitionDelay=+"s";
+      paths[num].style.transitionDelay=+firstHalf*i+"s";
       i++;
     } else{
       paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
