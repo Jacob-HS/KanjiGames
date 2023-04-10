@@ -208,14 +208,45 @@ function checkAnswer(){
   //}
     if (currentQuestion==answer){
       correctTracker.push("answeredCorrectly");
-      document.getElementById("score").innerHTML=1+parseInt(document.getElementById("score").innerHTML);
+      addScore();
       //document.getElementById("timerBar").style.transition="none";
       //document.getElementById("timerBar").style.width="0%";
       pickQuestion();
       addTime();
     }
   }
+  function addScore(){
+    let scoreElement=document.getElementById("score");
+    let scoreInt=parseInt(scoreElement.innerHTML);
+    let remainingTime=parseInt(document.getElementById("timer").innerHTML);
+    let bonusScore;
+    if (remainingTime >14){
+      bonusScore=10;
+    }else if (remainingTime>12){
+      bonusScore=5
+    }else if (remainingTime>9){
+      bonusScore=3
+    }else if (remainingTime>4){
+      bonusScore=2
+    }else{
+      bonusScore=1;
+    }
+    scoreElement.innerHTML=scoreInt+bonusScore;
+    makeFloat(bonusScore);
+  }
 
+  function makeFloat(bonusScore){
+    scoreContainer=document.getElementById("drawnOutScoreContainer");
+    floatyBoi=document.createElement("span");
+    bonus=document.createTextNode("+"+bonusScore);
+    floatyBoi.appendChild(bonus);
+    floatyBoi.classList.add("scoreFloater","fade-out-top");
+    if(bonusScore==2) floatyBoi.style.color="yellow";
+    if(bonusScore==3) floatyBoi.style.color="orange";
+    if(bonusScore==5) floatyBoi.style.color="green";
+    if(bonusScore==10) floatyBoi.style.color="aqua";
+    scoreContainer.appendChild(floatyBoi);
+  }
   function resetGame(){
     let summaryElements = document.getElementsByClassName("summaryElement");
     for (let element of summaryElements){
