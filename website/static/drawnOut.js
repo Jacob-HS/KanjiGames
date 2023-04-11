@@ -266,6 +266,10 @@ function checkAnswer(){
     //document.getElementById("progressBar").style.width="0%";
     //correctTracker=[];
     document.getElementById("answer").value="";
+    floaters=document.getElementsByClassName("scoreFloater");
+    for (floaty of floaters){
+      floaty.remove();
+    }
   }
   function playAgain(){
     resetGame();
