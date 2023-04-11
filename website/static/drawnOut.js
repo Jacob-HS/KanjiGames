@@ -5,7 +5,7 @@ let keys;
 let askedPool=[];
 let currentQuestion;
 let timerInterval;
-const correctTracker=[];
+let correctTracker=[];
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
     checkAnswer();
@@ -267,11 +267,17 @@ function resetGame(){
     element.classList.remove("fa-heart-o");
     element.classList.add("fa-heart");
   }
+  let floaties = document.querySelectorAll(".scoreFloater");
+  floaties.forEach(floater => {
+    floater.remove();
+  });
+
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
   //document.getElementById("progressBar").style.width="0%";
   correctTracker=[];
   askedPool=[];
   document.getElementById("answer").value="";
+  console.log("properly reset game");
 }
 function playAgain(){
   resetGame();
