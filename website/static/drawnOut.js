@@ -2,6 +2,7 @@ let currentHearts=3;
 let intervalID;
 let addedListener=false;
 let keys;
+let askedPool=[];
 let currentQuestion;
 let timerInterval;
 const correctTracker=[];
@@ -90,15 +91,20 @@ function pickQuestion(){
   svgContainer = document.getElementById("svg-container");
   svgContainer.innerHTML="";
   currentQuestion=vnJukugo[Math.floor(Math.random()*vnJukugo.length)];
-  console.log(currentQuestion);
+  askedPool.push(currentQuestion);
   for (const kanji of currentQuestion){
     svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
   }
   smushSvgs();
   hidePaths();
   setPathAppearTime();
+  resetTimer();
 
 
+}
+function resetTimer(){
+  document.getElementById("timerBar").innerHTML="";
+  document.getElementById("timerBar").append(document.createElement("div"));
 }
 function smushSvgs(){
   svgs = document.getElementsByTagName("svg");
@@ -125,7 +131,7 @@ function startPathAppearance(){
 function setPathAppearTime(){
   console.log("start of set path");
   paths = document.getElementsByTagName("path");
-  let i=1;
+  let i=0;
   let j=1;
   arr=getRandomArray(paths.length);
   firstHalf=5/(parseFloat(paths.length)*.4);
@@ -194,7 +200,7 @@ function displaySummary(win){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
-  //generateSummaryAnswers();
+  generateSummaryAnswers();
 }
 
 
@@ -215,72 +221,91 @@ function checkAnswer(){
       addTime();
     }
   }
-  function addScore(){
-    let scoreElement=document.getElementById("score");
-    let scoreInt=parseInt(scoreElement.innerHTML);
-    let remainingTime=parseInt(document.getElementById("timer").innerHTML);
-    let bonusScore;
-    if (remainingTime >14){
-      bonusScore=10;
-    }else if (remainingTime>12){
-      bonusScore=5
-    }else if (remainingTime>9){
-      bonusScore=3
-    }else if (remainingTime>4){
-      bonusScore=2
-    }else{
-      bonusScore=1;
-    }
-    scoreElement.innerHTML=scoreInt+bonusScore;
-    makeFloat(bonusScore);
+function addScore(){
+  let scoreElement=document.getElementById("score");
+  let scoreInt=parseInt(scoreElement.innerHTML);
+  let remainingTime=parseInt(document.getElementById("timer").innerHTML);
+  let bonusScore;
+  if (remainingTime >14){
+    bonusScore=10;
+  }else if (remainingTime>10){
+    bonusScore=5
+  }else if (remainingTime>6){
+    bonusScore=3
+  }else if (remainingTime>2){
+    bonusScore=2
+  }else{
+    bonusScore=1;
+  }
+  scoreElement.innerHTML=scoreInt+bonusScore;
+  makeFloat(bonusScore);
+}
+function makeFloat(bonusScore){
+  scoreContainer=document.getElementById("drawnOutScoreContainer");
+  floatyBoi=document.createElement("span");
+  bonus=document.createTextNode("+"+bonusScore);
+  floatyBoi.appendChild(bonus);
+  floatyBoi.classList.add("scoreFloater","fade-out-top");
+  if(bonusScore==2) floatyBoi.style.color="yellow";
+  if(bonusScore==3) floatyBoi.style.color="orange";
+  if(bonusScore==5) floatyBoi.style.color="green";
+  if(bonusScore==10) floatyBoi.style.color="aqua";
+  scoreContainer.appendChild(floatyBoi);
+}
+function resetGame(){
+  let summaryElements = document.getElementsByClassName("summaryElement");
+  for (let element of summaryElements){
+    element.classList.remove("active");
+    element.classList.add("hidden");
+  }
+  document.getElementById("score").innerHTML=0;
+  document.getElementById("summaryAnswerContainer").innerHTML="";
+  currentHearts=3;
+
+  let heartElements = document.getElementById("heartContainer").children;
+  for (let element of heartElements){
+    element.classList.remove("fa-heart-o");
+    element.classList.add("fa-heart");
+  }
+  document.getElementById("heartContainer").classList.remove("shake-horizontal");
+  //document.getElementById("progressBar").style.width="0%";
+  correctTracker=[];
+  askedPool=[];
+  document.getElementById("answer").value="";
+}
+function playAgain(){
+  resetGame();
+  startGame();
+}
+function changeDifficulty(){
+  resetGame();
+  let diffh = document.getElementById("diffh");
+  let container= document.getElementById("myContainer");
+  diffh.classList.remove("goAway","hidden");
+  container.classList.remove("goAway","hidden");
+  homeButtons[0].classList.remove("hidden");
+
+}
+function generateSummaryAnswers(){
+  let summaryAnswerContainer=document.getElementById("summaryAnswerContainer");
+  let row=document.createElement("div");
+  let temp;
+  let i=0;
+  row.classList.add("summaryElement","active", "summaryAnswerRow");
+  summaryAnswerContainer.appendChild(row);
+  for(let word of askedPool){
+    temp=document.createElement("a");
+    kanji=document.createTextNode(word);
+    temp.appendChild(kanji);
+    linkify(temp);
+    temp.classList.add("summaryElement","active","summaryAnswer", correctTracker[i]);
+    i++;
+    row.appendChild(temp);
   }
 
-  function makeFloat(bonusScore){
-    scoreContainer=document.getElementById("drawnOutScoreContainer");
-    floatyBoi=document.createElement("span");
-    bonus=document.createTextNode("+"+bonusScore);
-    floatyBoi.appendChild(bonus);
-    floatyBoi.classList.add("scoreFloater","fade-out-top");
-    if(bonusScore==2) floatyBoi.style.color="yellow";
-    if(bonusScore==3) floatyBoi.style.color="orange";
-    if(bonusScore==5) floatyBoi.style.color="green";
-    if(bonusScore==10) floatyBoi.style.color="aqua";
-    scoreContainer.appendChild(floatyBoi);
-  }
-  function resetGame(){
-    let summaryElements = document.getElementsByClassName("summaryElement");
-    for (let element of summaryElements){
-      element.classList.remove("active");
-      element.classList.add("hidden");
-    }
-    document.getElementById("score").innerHTML=0;
-    document.getElementById("summaryAnswerContainer").innerHTML="";
-    currentHearts=3;
-  
-    let heartElements = document.getElementById("heartContainer").children;
-    for (let element of heartElements){
-      element.classList.remove("fa-heart-o");
-      element.classList.add("fa-heart");
-    }
-    document.getElementById("heartContainer").classList.remove("shake-horizontal");
-    //document.getElementById("progressBar").style.width="0%";
-    //correctTracker=[];
-    document.getElementById("answer").value="";
-    floaters=document.getElementsByClassName("scoreFloater");
-    for (floaty of floaters){
-      floaty.remove();
-    }
-  }
-  function playAgain(){
-    resetGame();
-    startGame();
-  }
-  function changeDifficulty(){
-    resetGame();
-    let diffh = document.getElementById("diffh");
-    let container= document.getElementById("myContainer");
-    diffh.classList.remove("goAway","hidden");
-    container.classList.remove("goAway","hidden");
-    homeButtons[0].classList.remove("hidden");
-  
-  }
+}
+
+function linkify(node){
+  node.href="https://jisho.org/search/"+node.innerHTML;
+  node.target="_blank";
+}
