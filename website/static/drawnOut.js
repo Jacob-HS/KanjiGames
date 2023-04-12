@@ -5,7 +5,6 @@ let addedListener=false;
 let keys;
 let askedPool=[];
 let currentQuestion;
-let timerInterval;
 let poolSize;
 let correctTracker=[];
 easySelector.addEventListener("click", function(){
@@ -19,6 +18,12 @@ changeDiffButton.addEventListener("click", function(){
 });
 retryButton.addEventListener("click", function(){
   playAgain();
+});
+answer.addEventListener("input", function(){
+  console.log("fiyaaad");
+  if (vnJukugo[currentQuestion].includes(answer.value)){
+    checkAnswer();
+  }
 });
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
@@ -51,12 +56,12 @@ function setDiff(diff){
 
   if (difficultyLevel==1){
     maxTime="20";
-    keys=Object.keys(masterList);
+    keys=Object.keys(vnJukugo);
     poolSize=1585;
   }
   if (difficultyLevel==2){
     maxTime="20";
-    keys=Object.keys(masterList);
+    keys=Object.keys(vnJukugo);
     poolSize=2481;
   }
 }
@@ -110,7 +115,7 @@ function addTime(){
 function pickQuestion(){
   svgContainer = document.getElementById("svg-container");
   svgContainer.innerHTML="";
-  currentQuestion=vnJukugo[Math.floor(Math.random()*poolSize)];
+  currentQuestion=keys[Math.floor(Math.random()*poolSize)];
   askedPool.push(currentQuestion);
   for (const kanji of currentQuestion){
     svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
@@ -223,7 +228,7 @@ function checkAnswer(){
   //  skip();
   //  return;
   //}
-    if (currentQuestion==answer){
+    if (currentQuestion==answer || vnJukugo[currentQuestion].includes(answer)){
       correctTracker.push("answeredCorrectly");
       addScore();
       showAnswer();
