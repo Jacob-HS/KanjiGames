@@ -5,6 +5,7 @@ let keys;
 let askedPool=[];
 let currentQuestion;
 let timerInterval;
+let poolSize;
 let correctTracker=[];
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
@@ -38,6 +39,12 @@ function setDiff(diff){
   if (difficultyLevel==1){
     maxTime="20";
     keys=Object.keys(masterList);
+    poolSize=1585;
+  }
+  if (difficultyLevel==2){
+    maxTime="20";
+    keys=Object.keys(masterList);
+    poolSize=2481;
   }
 }
 
@@ -75,7 +82,7 @@ function removeHeart(){
   thisHeart.className="fa fa-heart-o";
   currentHearts--;
   if (currentHearts == 0){
-    endGame(false);
+    endGame();
   }else{
     pickQuestion();
     addTime();
@@ -90,7 +97,7 @@ function addTime(){
 function pickQuestion(){
   svgContainer = document.getElementById("svg-container");
   svgContainer.innerHTML="";
-  currentQuestion=vnJukugo[Math.floor(Math.random()*vnJukugo.length)];
+  currentQuestion=vnJukugo[Math.floor(Math.random()*poolSize)];
   askedPool.push(currentQuestion);
   for (const kanji of currentQuestion){
     svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
@@ -172,29 +179,20 @@ function hidePaths(){
     path.classList.add("hiddenPath");
   }
 }
-function endGame(win){
+function endGame(){
   clearInterval(intervalID);
   let gameplayElements = document.getElementsByClassName("gameplayElement");
   for (let element of gameplayElements){
     element.classList.remove("active");
     element.classList.add("hidden");
   }
-  displaySummary(win);
+  displaySummary();
 }
 
-function displaySummary(win){
+function displaySummary(){
   result=document.getElementById("result");
-  if (win){
-    if (currentHearts==3){
-      result.innerHTML="Flawless";
-    }
-    else{
-      result.innerHTML="Victory!";
-    }
-    
-  }else {
-    result.innerHTML="Defeat"
-  }
+  result.innerHTML=document.getElementById("score").innerHTML+"pts"
+  
   let summaryElements = document.getElementsByClassName("summaryElement");
   for (let element of summaryElements){
     element.classList.remove("hidden");
@@ -215,12 +213,30 @@ function checkAnswer(){
     if (currentQuestion==answer){
       correctTracker.push("answeredCorrectly");
       addScore();
+      showAnswer();
+      setTimeout(() => {
+        pickQuestion();
+        addTime();
+      }, 1000);
       //document.getElementById("timerBar").style.transition="none";
       //document.getElementById("timerBar").style.width="0%";
-      pickQuestion();
-      addTime();
     }
   }
+function showAnswer(){
+  document.getElementById("timerBar").children[0].style.animationPlayState="paused";
+  let svgContainer=document.getElementById("svg-container");
+  svgContainer.innerHTML="";
+  clearInterval(intervalID);
+  for (const kanji of askedPool[askedPool.length-1]){
+    svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
+  }
+  smushSvgs();
+  paths=document.getElementsByTagName("g");
+  for (const path of paths) {
+    path.style.stroke="green";
+  }
+  
+}
 function addScore(){
   let scoreElement=document.getElementById("score");
   let scoreInt=parseInt(scoreElement.innerHTML);
@@ -267,17 +283,16 @@ function resetGame(){
     element.classList.remove("fa-heart-o");
     element.classList.add("fa-heart");
   }
-  let floaties = document.querySelectorAll(".scoreFloater");
-  floaties.forEach(floater => {
-    floater.remove();
-  });
-
   document.getElementById("heartContainer").classList.remove("shake-horizontal");
+
+  floaties = document.querySelectorAll(".scoreFloater");
+  for (const floater of floaties) {
+    floater.remove();
+  }
   //document.getElementById("progressBar").style.width="0%";
   correctTracker=[];
   askedPool=[];
   document.getElementById("answer").value="";
-  console.log("properly reset game");
 }
 function playAgain(){
   resetGame();
@@ -289,7 +304,7 @@ function changeDifficulty(){
   let container= document.getElementById("myContainer");
   diffh.classList.remove("goAway","hidden");
   container.classList.remove("goAway","hidden");
-  homeButtons[0].classList.remove("hidden");
+  document.getElementsByClassName("homeButton")[0].classList.remove("hidden");
 
 }
 function generateSummaryAnswers(){

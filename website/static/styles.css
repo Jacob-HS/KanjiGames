@@ -513,6 +513,9 @@ svg g{
   stroke: rgb(198, 198, 198);
 }
 
+.showAnswer g{
+  stroke: green !important;  
+}
 
 @media only screen and (max-width: 768px) {
   .flex-container {
