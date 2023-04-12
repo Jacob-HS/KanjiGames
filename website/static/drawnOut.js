@@ -1,3 +1,4 @@
+(() => {
 let currentHearts=3;
 let intervalID;
 let addedListener=false;
@@ -7,6 +8,18 @@ let currentQuestion;
 let timerInterval;
 let poolSize;
 let correctTracker=[];
+easySelector.addEventListener("click", function(){
+  makeGoAway(1);
+});
+normalSelector.addEventListener("click", function(){
+  makeGoAway(2);
+});
+changeDiffButton.addEventListener("click", function(){
+  changeDifficulty();
+});
+retryButton.addEventListener("click", function(){
+  playAgain();
+});
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
     checkAnswer();
@@ -330,3 +343,5 @@ function linkify(node){
   node.href="https://jisho.org/search/"+node.innerHTML;
   node.target="_blank";
 }
+})();
+
