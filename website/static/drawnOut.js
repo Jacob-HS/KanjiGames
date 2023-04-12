@@ -7,6 +7,9 @@ let askedPool=[];
 let currentQuestion;
 let poolSize;
 let correctTracker=[];
+const ke = new KeyboardEvent('keydown', {
+  bubbles: true, cancelable: true, keyCode: 13
+});
 easySelector.addEventListener("click", function(){
   makeGoAway(1);
 });
@@ -19,9 +22,10 @@ changeDiffButton.addEventListener("click", function(){
 retryButton.addEventListener("click", function(){
   playAgain();
 });
-answer.addEventListener("input", function(){
-  console.log("fiyaaad");
+answer.addEventListener("input", function(event){
+  console.log(event);
   if (vnJukugo[currentQuestion].includes(answer.value)){
+    answer.blur();
     checkAnswer();
   }
 });
@@ -224,6 +228,7 @@ function checkAnswer(){
   let answerElement=document.getElementById("answer");
   let answer=answerElement.value;
   answerElement.value="";
+  
   //if (answer == "s" || answer == "S" || answer == "ｓ" || answer == "Ｓ"){
   //  skip();
   //  return;
@@ -235,10 +240,12 @@ function checkAnswer(){
       setTimeout(() => {
         pickQuestion();
         addTime();
+        answerElement.focus();
       }, 1000);
       //document.getElementById("timerBar").style.transition="none";
       //document.getElementById("timerBar").style.width="0%";
     }
+    
   }
 function showAnswer(){
   document.getElementById("timerBar").children[0].style.animationPlayState="paused";
