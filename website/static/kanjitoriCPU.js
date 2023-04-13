@@ -311,6 +311,7 @@ function resetGame(){
 
   gameHistoryContainer = document.getElementsByClassName("gameHistoryContainer")[0];
   gameHistoryContainer.innerHTML="";
+  document.getElementById("historyText").innerHTML="Click to reveal full history";
 }
 function playAgain(){
   resetGame();
