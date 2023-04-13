@@ -92,7 +92,7 @@ function setDiff(diff){
     keys = Object.keys(masterList);
   }
   if (difficultyLevel==3){
-    poolSize=758;
+    poolSize=757;
     poolFloor=170;
     maxScore="15";
     maxTime="15";

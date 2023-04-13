@@ -12,7 +12,7 @@ let keys;
 let intervalID;
 let currentHearts=3;
 let currentResponse=1;
-
+let bannedPool=[];
 
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
@@ -96,12 +96,13 @@ function setDiff(diff){
     keys = Object.keys(masterList);
   }
   if (difficultyLevel==3){
-    poolSize=334;
+    keys = Object.keys(masterList);
+    poolSize=keys.length - 170;
     poolFloor=170;
     maxScore="15";
     maxTime="15";
     activeList=masterList;
-    keys = Object.keys(masterList);
+    
   }
   console.log(activeList)
 }
@@ -119,7 +120,14 @@ function startGame(){
   document.getElementById("answer").focus();
 }
 function pickQuestion(){
-  candidate= keys[Math.floor((poolSize-poolFloor) * Math.random())+poolFloor ];
+  let candidate;
+  if (bannedPool.length == poolSize){
+    bannedPool=[];
+  }
+  do{
+    candidate= keys[Math.floor((poolSize) * Math.random())+poolFloor];
+  }while(bannedPool.includes(candidate));
+  bannedPool.push(candidate);
   askedPool.push(candidate);
   document.getElementById("currRadical").innerHTML=candidate;
   currentQuestion=candidate;
