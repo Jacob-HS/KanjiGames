@@ -58,7 +58,8 @@ body {
   border-radius: 10px;  
   background-color: rgba(255, 255, 255, 0.753);
   color: black;
-  font-size: 3vh;
+  font-size: 1.4vw;
+  line-height: 1.5;
   box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
 
@@ -535,7 +536,7 @@ svg g{
     border-radius: 10px;  
     background-color: rgba(255, 255, 255, 0.753);
     color: black;
-    font-size: 2vh;
+    font-size: 4vw;
     box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
   }
   .difficulty-header{
