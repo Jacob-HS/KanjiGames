@@ -518,6 +518,14 @@ svg g{
   stroke: green !important;  
 }
 
+.duelSelectFlexContainer{
+  display: flex;
+  margin: 0 10%;
+  height: 80vh;
+  align-items: center;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 768px) {
   .flex-container {
     margin: 0 5%;

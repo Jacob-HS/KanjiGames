@@ -46,6 +46,10 @@ def kanjitoriCpu():
 def drawnOutModeSelect():
     return render_template("DOModeSelect.html")
 
-@views.route('drawn-out/standard')
+@views.route('/drawn-out/standard')
 def drawnOutStandard():
     return render_template("drawnOut.html", kanjisvgs=svgs, vnJukugo=vnJukugo)
+
+@views.route('/drawn-out/duel-select')
+def drawnOutDuelSelect():
+    return render_template("drawnOutDuelSelect.html")
