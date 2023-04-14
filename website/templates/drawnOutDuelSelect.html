@@ -8,8 +8,23 @@
 </a>
 
 <div class="duelSelectFlexContainer">
-  <p class="game-button fade-in-bottom" style="width:30vw;margin-right:2vw">Create a game</p>
+  <p class="game-button fade-in-bottom" style="width:30vw;margin-right:2vw" onclick="generateKey()">Create a game</p>
   <p class="game-button fade-in-bottom" style="width:30vw;margin-left:2vw">Join game</p>  
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function() {
+      socket.emit('my_event', {data: 'I\'m connected!'});
+    });
+    socket.on("my_response", function(message) {
+      console.log(message["data"]);
+    });
 
+    function generateKey(){
+      socket.emit("generateKey", (key) => {
+        console.log("heres your key: "+key)
+      })
+    }
+</script>
 {% endblock %}
