@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Kanji Games - Drawn Out (Duel){% endblock %}
+
+{% block content %}
+<span class="playerNameHeader" id="playerName">(You)</span>
+<span class="playerNameHeader" id="opponentName">Waiting...</span>
+<div class="roomCreationContainer">
+  <div class="roomCreationBox">
+    <p class="roomCreationBoxHeader nameCreationElement active">Pick a name!</p>
+    <input class="roomCreationBoxInput nameCreationElement active" id="nameAnswer">
+    <button class="roomCreationBoxSubmit nameCreationElement active" id="nameAnswerButton">Next</button>
+    <p class="roomCreationBoxHeader inviteInfoElement hidden">Invite a friend:</p>
+    <button class="inviteLinkButton inviteInfoElement hidden" id="inviteLinkButton">Copy invite link</button>
+    <p class="roomNumberInfoLine inviteInfoElement hidden">You are in room #<span id="roomNumber"></span></p>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{url_for('static',filename='drawnOutDuel.js')}}"></script>
+{% endblock %}

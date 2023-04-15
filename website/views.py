@@ -53,3 +53,7 @@ def drawnOutStandard():
 @views.route('/drawn-out/duel-select')
 def drawnOutDuelSelect():
     return render_template("drawnOutDuelSelect.html")
+
+@views.route('/drawn-out/duel')
+def drawnOutDuel():
+    return render_template("drawnOutDuel.html")
