@@ -44,6 +44,10 @@ socket.on("pickedName", (namae)=>{
   document.getElementById("opponentName").innerHTML=namae;
 });
 
+socket.on("startGame", function(){
+  clearField();
+});
+
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
@@ -80,6 +84,11 @@ function copyInvite(){
 }, function() {
     console.log('Copy error')
 });
+}
+
+function clearField(){
+  document.getElementById("roomCreationContainer").classList.add("hidden");
+  
 }
 
 })();

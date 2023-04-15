@@ -3,9 +3,12 @@
 {% block title %}Kanji Games - Drawn Out (Duel){% endblock %}
 
 {% block content %}
-<span class="playerNameHeader" id="playerName">(You)</span>
-<span class="playerNameHeader" id="opponentName">Waiting...</span>
-<div class="roomCreationContainer">
+<div id="gameField">
+  <div id="playerArea"><span class="playerNameHeader" id="playerName">(You)</span></div>
+  <div id="gameArea"></div>
+  <div id="opponentArea"><span class="playerNameHeader" id="opponentName">Waiting...</span></div>
+</div>
+<div class="roomCreationContainer" id="roomCreationContainer">
   <div class="roomCreationBox">
     <p class="roomCreationBoxHeader nameCreationElement active">Pick a name!</p>
     <input class="roomCreationBoxInput nameCreationElement active" id="nameAnswer">
