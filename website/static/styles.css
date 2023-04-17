@@ -230,7 +230,12 @@ body {
 #timer {
   margin: 4vh 0;
 }
-
+#countdownTimer {
+  margin: 40vh 0 0 0;
+  text-align: center;
+  color: white;
+  font-size: 4vw;
+}
 #radical-container {
   margin: 0px 30% 0 30%;
   text-align: center;

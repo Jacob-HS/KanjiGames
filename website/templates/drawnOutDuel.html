@@ -5,7 +5,9 @@
 {% block content %}
 <div id="gameField">
   <div id="playerArea"><span class="playerNameHeader" id="playerName">(You)</span></div>
-  <div id="gameArea"></div>
+  <div id="gameArea">
+    <p id="countdownTimer" class="hidden"></p>
+  </div>
   <div id="opponentArea"><span class="playerNameHeader" id="opponentName">Waiting...</span></div>
 </div>
 <div class="roomCreationContainer" id="roomCreationContainer">
@@ -19,6 +21,10 @@
 
   </div>
 </div>
+<script>
+  let masterList = {{ kanjisvgs | tojson }};
+  let vnJukugo = {{ vnJukugo | tojson }};
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{url_for('static',filename='drawnOutDuel.js')}}"></script>
 {% endblock %}
