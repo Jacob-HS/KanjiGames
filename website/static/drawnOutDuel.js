@@ -1,7 +1,11 @@
 (() => {
-  let roomNum;
-  let host;
-  let intervalID;
+let roomNum;
+let host;
+let intervalID;
+let askedPool=[];
+let currentQuestion;
+let currentSvgs;
+let acceptedHiraganaAnswers=[];
 var socket = io();
 socket.on('connect', function() {
   socket.emit('my_event', {data: 'I\'m connected!'});
@@ -9,11 +13,15 @@ socket.on('connect', function() {
 socket.on("message", function(message) {
   console.log(message);
 });
-function generateKey(){
-  socket.emit("generateKey", (key) => {
-    console.log("heres your key: "+key)
-  })
-}
+socket.on("newQuestion", function(questionInfo){
+  console.log(questionInfo);
+  pickQuestion(questionInfo);
+})
+
+socket.on("awardPoint", function(isHost){
+  let myPoint = isHost===host;
+  awardPoint(myPoint);
+})
 const urlParams = new URLSearchParams(location.search);
 let room = urlParams.get("room")
 if (room === null){
@@ -50,6 +58,20 @@ socket.on("startGame", function(){
   startCountdown();
 });
 
+answer.addEventListener("keydown", function(event){
+  if(event.key=="Enter"){
+    checkAnswer();
+  }
+  //if(event.key=="Escape"){
+  //  skip();
+ // }
+});
+answer.addEventListener("input", function(event){
+  if (acceptedHiraganaAnswers.includes(answer.value)){
+    answer.blur();
+    checkAnswer();
+  }
+});
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
@@ -105,24 +127,34 @@ function tickDown(){
   countdownTimer.innerHTML=parseInt(countdownTimer.innerHTML)-1;
   if (countdownTimer.innerHTML =="0"){
     clearInterval(intervalID);
+    playerScoreHeaders = document.getElementsByClassName("playerScoreHeader");
+    for (const playerScoreHeader of playerScoreHeaders) {
+      playerScoreHeader.classList.remove("hidden");
+      playerScoreHeader.classList.add("active");
+    }
     countdownTimer.classList.remove("active");
     countdownTimer.classList.add("hidden");
     toggleGameElements();
-    pickQuestion();
+    if (host){
+      socket.emit("requestQuestion");
+    }
   }
 }
 
-function pickQuestion(){
+function pickQuestion(questionInfo){
+  acceptedHiraganaAnswers=questionInfo["hiragana"];
+  currentSvgs=questionInfo["svgs"];
   svgContainer = document.getElementById("svg-container");
   svgContainer.innerHTML="";
-  currentQuestion=keys[Math.floor(Math.random()*poolSize)];
+  currentQuestion=questionInfo["word"];
   askedPool.push(currentQuestion);
-  for (const kanji of currentQuestion){
-    svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
+  for (const kanji in currentQuestion){
+    svgContainer.innerHTML=svgContainer.innerHTML+questionInfo["svgs"][kanji];
   }
   smushSvgs();
   hidePaths();
-  setPathAppearTime();
+  setPathAppearTime(questionInfo);
+  setTimeout(startPathAppearance, 50);
 }
 
 function smushSvgs(){
@@ -146,14 +178,18 @@ function startPathAppearance(){
     path.classList.add("activePath");
   }
 }
-
-function setPathAppearTime(){
+function hidePaths(){
+  paths = document.getElementsByTagName("path");
+  for (const path of paths){
+    path.classList.add("hiddenPath");
+  }
+}
+function setPathAppearTime(questionInfo){
   console.log("start of set path");
   paths = document.getElementsByTagName("path");
   let i=0;
   let j=1;
-  //request random array of paths.length size
-  //arr=getRandomArray(paths.length);
+  arr=questionInfo["appearOrder"];
   firstHalf=5/(parseFloat(paths.length)*.4);
   secondHalf=15/(parseFloat(paths.length)*.6);
   console.log(firstHalf);
@@ -182,5 +218,45 @@ function toggleGameElements(){
     }
   }
 }
-
+function checkAnswer(){
+  let answerElement=document.getElementById("answer");
+  let answer=answerElement.value;
+  answerElement.value="";
+    if (currentQuestion==answer || acceptedHiraganaAnswers.includes(answer)){
+      socket.emit("correctAnswer",host)
+      //addScore();
+      //showAnswer();
+      //setTimeout(() => {
+      //  pickQuestion();
+      //  addTime();
+      //  answerElement.focus();
+      //}, 1000);
+    }
+  }
+function awardPoint(myPoint){
+  showAnswer(myPoint);
+  if (myPoint){
+    document.getElementById("playerScoreHeader").innerHTML=parseInt(document.getElementById("playerScoreHeader").innerHTML)+1;
+  }else{
+    document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
+  }
+  setTimeout(() => {
+    if (host){
+      socket.emit("requestQuestion");
+    }
+    document.getElementById("answer").focus();
+  }, 1000);
+}
+function showAnswer(myPoint){
+  svgContainer.innerHTML="";
+  for (const i in currentQuestion){
+    svgContainer.innerHTML=svgContainer.innerHTML+currentSvgs[i];
+  }
+  smushSvgs();
+  paths=document.getElementsByTagName("g");
+  for (const path of paths) {
+    if(myPoint) path.style.stroke="green";
+    if(!myPoint) path.style.stroke="red";
+  }
+}
 })();
