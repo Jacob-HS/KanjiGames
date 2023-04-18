@@ -7,6 +7,8 @@ app = create_app()
 socketio = SocketIO(app)
 hostNames = {}
 roomDict = {}
+askedQuestions={}
+
 with open("svgjson.json","r",encoding="utf-8") as svgfile:
     svgs=json.load(svgfile)
 with open("vnJukugo.json","r",encoding="utf-8") as svgfile:
@@ -26,14 +28,16 @@ def makeRoom():
     leave_room(rooms()[0])
     roomNumber= str(random.randint(1,100))
     join_room(roomNumber)
-    roomDict[str(roomNumber)]=[request.sid]
+    roomDict[str(roomNumber)]=[]
+    askedQuestions[str(roomNumber)]=[]
+    roomDict[str(roomNumber)].append([request.sid, False]) #sid and their Readyup state(for endgame replay options)
     return roomNumber
 
 @socketio.event
 def join(roomNumber):
     leave_room(rooms()[0])
     join_room(str(roomNumber))
-    roomDict[str(roomNumber)].append(request.sid )
+    roomDict[str(roomNumber)].append([request.sid,False])
     return hostNames[rooms()[0]]
 
 
@@ -47,12 +51,14 @@ def pickName(name, host):
 
 @socketio.event
 def requestQuestion():
-    questionInfo=generateNewQuestion()
+    questionInfo=generateNewQuestion(rooms()[0])
     emit("newQuestion", questionInfo, to=rooms()[0])
 
-def generateNewQuestion():
+def generateNewQuestion(room):
     questionInfo={}
     key, value = random.choice(list(vnJukugo.items()))
+    while key in askedQuestions[room]:
+        key, value = random.choice(list(vnJukugo.items()))
     questionInfo["word"]=key
     questionInfo["hiragana"]=value
     questionInfo["svgs"]=[]
@@ -68,9 +74,29 @@ def generateNewQuestion():
     return questionInfo
 
 @socketio.event
-def correctAnswer(host):
-    #maybe do something to make sure events dont collide
-    emit("awardPoint",host, to=rooms()[0])
+def correctAnswer(host, question):
+    if (question not in askedQuestions[rooms()[0]]):
+        emit("awardPoint",host, to=rooms()[0])
+        askedQuestions[rooms()[0]].append(question)
+
+@socketio.event
+def readyUp():
+    #toggle ready state
+    print(roomDict)
+    for player in roomDict[rooms()[0]]:
+        if player[0]==(request.sid):
+            player[1]=not player[1]
+    
+    #if both players are readied up
+    if (roomDict[rooms()[0]][0][1] and roomDict[rooms()[0]][1][1]):
+        #unreadyUp
+        roomDict[rooms()[0]][0][1]=False
+        roomDict[rooms()[0]][1][1]=False
+        askedQuestions[rooms()[0]]=[]
+        emit("restartGame", to=rooms()[0])
+    else:
+        emit("opponentReady", to=rooms()[0], include_self=False)
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

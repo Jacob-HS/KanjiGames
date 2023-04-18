@@ -7,11 +7,12 @@
   <div id="playerArea"><span class="playerNameHeader" id="playerName">(You)</span><span class="playerScoreHeader hidden" id="playerScoreHeader">0</span></div>
   <div id="gameArea">
     <p id="countdownTimer" class="hidden"></p>
+    <div class="answeredCorrectlyBanner" id="answeredCorrectlyBanner"><span id="answeredCorrectlyName"></span><span> answered correctly!</span></div>
     <div class="gameplayElement hidden" id="svgPadding"></div>
     <div class="gameplayElement hidden" id="svg-container"></div>
     <input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
   </div>
-  <div id="opponentArea"><span class="playerScoreHeader hidden" id="opponentScoreHeader">0</span><span class="playerNameHeader" id="opponentName">Waiting...</span></div>
+  <div id="opponentArea"><div class="opponentScoreHeader"><span class="playerScoreHeader hidden" id="opponentScoreHeader">0</span><span class="playerNameHeader" id="opponentName">Waiting...</span></div></div>
 </div>
 <div class="roomCreationContainer" id="roomCreationContainer">
   <div class="roomCreationBox">
@@ -22,6 +23,17 @@
     <button class="inviteLinkButton inviteInfoElement hidden" id="inviteLinkButton">Copy invite link</button>
     <p class="roomNumberInfoLine inviteInfoElement hidden">You are in room #<span id="roomNumber"></span></p>
 
+  </div>
+</div>
+<div class="endGameDisplayContainer hidden" id="endGameDisplayContainer">
+  <div class="endGameDisplayBox">
+    <p class="endGameDisplayHeader" id="endGameDisplayHeader">You win.</p>
+    <p class="playAgainHeader">Play Again?</p>
+    <div class="endGameButtonContainer">
+      <button id="duelAgain">Ready Up</button>
+      <button id="duelExit">Quit</button>
+    </div>
+    
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>

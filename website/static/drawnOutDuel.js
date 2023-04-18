@@ -16,12 +16,16 @@ socket.on("message", function(message) {
 socket.on("newQuestion", function(questionInfo){
   console.log(questionInfo);
   pickQuestion(questionInfo);
-})
+});
 
 socket.on("awardPoint", function(isHost){
   let myPoint = isHost===host;
   awardPoint(myPoint);
-})
+});
+
+socket.on("opponentReady",function(){
+  lightUpName(false);
+});
 const urlParams = new URLSearchParams(location.search);
 let room = urlParams.get("room")
 if (room === null){
@@ -58,6 +62,10 @@ socket.on("startGame", function(){
   startCountdown();
 });
 
+socket.on("restartGame", function(){
+  restartGame();
+})
+
 answer.addEventListener("keydown", function(event){
   if(event.key=="Enter"){
     checkAnswer();
@@ -72,6 +80,10 @@ answer.addEventListener("input", function(event){
     checkAnswer();
   }
 });
+document.getElementById("duelAgain").addEventListener("click", function(event){
+  readyUp();
+  socket.emit("readyUp")
+})
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
@@ -223,7 +235,7 @@ function checkAnswer(){
   let answer=answerElement.value;
   answerElement.value="";
     if (currentQuestion==answer || acceptedHiraganaAnswers.includes(answer)){
-      socket.emit("correctAnswer",host)
+      socket.emit("correctAnswer",host, currentQuestion)
       //addScore();
       //showAnswer();
       //setTimeout(() => {
@@ -240,12 +252,25 @@ function awardPoint(myPoint){
   }else{
     document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
   }
+
+  if(document.getElementById("opponentScoreHeader").innerHTML=="3" || document.getElementById("playerScoreHeader").innerHTML=="3"){
+    endRound(myPoint);
+    return;
+  }
+
+  if(myPoint){
+    document.getElementById("answeredCorrectlyName").innerHTML="You";
+  }else{
+    document.getElementById("answeredCorrectlyName").innerHTML=document.getElementById("opponentName").innerHTML;
+  }
+  document.getElementById("answeredCorrectlyBanner").style.opacity="1";
   setTimeout(() => {
     if (host){
       socket.emit("requestQuestion");
     }
     document.getElementById("answer").focus();
-  }, 1000);
+    document.getElementById("answeredCorrectlyBanner").style.opacity="0";
+  }, 2000);
 }
 function showAnswer(myPoint){
   svgContainer.innerHTML="";
@@ -258,5 +283,53 @@ function showAnswer(myPoint){
     if(myPoint) path.style.stroke="green";
     if(!myPoint) path.style.stroke="red";
   }
+}
+
+function endRound(win){
+  if(win){
+    document.getElementById("endGameDisplayHeader").innerHTML="You win!";
+  }else{
+    document.getElementById("endGameDisplayHeader").innerHTML=document.getElementById("opponentName").innerHTML+" wins."
+  }
+
+  document.getElementById("endGameDisplayContainer").classList.remove("hidden");
+  document.getElementById("endGameDisplayContainer").classList.add("active");
+}
+
+function restartGame(){
+  document.getElementById("endGameDisplayContainer").classList.remove("active");
+  document.getElementById("endGameDisplayContainer").classList.add("hidden");
+
+  document.getElementById("playerScoreHeader").innerHTML="0";
+  document.getElementById("opponentScoreHeader").innerHTML="0";
+  document.getElementById("opponentName").style.color="white";
+  document.getElementById("playerName").style.color="white";
+
+  document.getElementById("duelAgain").style.pointerEvents="auto";
+  document.getElementById("duelAgain").innerHTML="Ready up";
+  document.getElementById("duelExit").classList.remove("hidden");
+
+  document.getElementById("svg-container").innerHTML="";
+  toggleGameElements();
+
+  startCountdown();
+}
+
+function readyUp(){
+  document.getElementById("duelAgain").innerHTML="Ready";
+  document.getElementById("duelAgain").style.pointerEvents="none";
+  document.getElementById("duelExit").classList.add("hidden");
+  lightUpName(true);
+}
+
+function lightUpName(myself){
+  let name;
+
+  if(myself){
+    name=document.getElementById("playerName");
+  }else{
+    name=document.getElementById("opponentName");
+  }
+  name.style.color="green";
 }
 })();

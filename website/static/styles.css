@@ -535,13 +535,17 @@ svg g{
   font-family: Arial, Helvetica, sans-serif;
   color: white;
   font-size: 4vw;
-  margin: 2vw 2vw;
+  margin: 0 2vw;
 }
-#playerName{
-  float: left;
+.opponentScoreHeader {
+  display: flex;
+  justify-content: flex-end;
 }
-#opponentName{
-  float: right;
+.answeredCorrectlyBanner{
+  font-size: 4vw;
+  color:white;
+  text-align: center;
+  opacity:0;
 }
  
 #svgPadding {
@@ -558,12 +562,44 @@ svg g{
   align-items: center;
   justify-content: center;
 }
+.endGameDisplayContainer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .roomCreationBox {
   width: 20vw;
-
   background-color: #312f31;
   border-radius: 1vw;
   box-shadow: 0 0 0 100vmax rgba(0,0,0,.3); 
+}
+.endGameDisplayBox {
+  width: 20vw;
+  background-color: #312f31;
+  border-radius: 1vw;
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3); 
+}
+.endGameDisplayHeader {
+  text-align: center;
+  margin-top: 2vh;
+  margin-bottom: 0;
+  color: white; 
+  font-size: 2vw;
+}
+
+.playAgainHeader {
+  text-align: center;
+  margin-top: 2vh;
+  margin-bottom: 0;
+  color: white; 
+  font-size: 1.5vw;
 }
 .roomCreationBoxHeader {
   text-align: center;
@@ -607,6 +643,11 @@ svg g{
   cursor: pointer;
 }
 
+.endGameButtonContainer {
+  text-align: center;
+  margin: 2vh 0;
+}
+
 .inviteLinkButton {
   margin: 10% 20% 0 20%;
   border-radius: 1vw;
@@ -616,6 +657,25 @@ svg g{
   background-color:rgb(0, 153, 209);
   border: none;
   font-size: 1.5vw;
+}
+
+#duelAgain{
+  font-size: 1.5vw;
+  border-radius: .5vw;
+  padding: 1vh 1vw;
+  border: none;
+  background-color: green;
+  color: white;
+}
+
+#duelExit {
+  font-size: 1.5vw;
+  border-radius: .5vw;
+  padding: 1vh 1vw;
+  border: none;
+  
+  background-color: red;
+  color: white;
 }
 .roomNumberInfoLine {
   text-align: center; 
