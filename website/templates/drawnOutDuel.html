@@ -9,7 +9,7 @@
     <p id="countdownTimer" class="hidden"></p>
     <div class="answeredCorrectlyBanner" id="answeredCorrectlyBanner"><span id="answeredCorrectlyName"></span><span> answered correctly!</span></div>
     <div class="gameplayElement hidden" id="svgPadding"></div>
-    <div class="gameplayElement hidden" id="svg-container"></div>
+    <div class="gameplayElement hidden" id="svg-container" style="height: 20vw"></div>
     <input class="gameplayElement hidden" type="text" id="answer" name="answer" placeholder="答え" autocomplete="off">
   </div>
   <div id="opponentArea"><div class="opponentScoreHeader"><span class="playerScoreHeader hidden" id="opponentScoreHeader">0</span><span class="playerNameHeader" id="opponentName">Waiting...</span></div></div>
@@ -36,6 +36,10 @@
     
   </div>
 </div>
+
+<p class="disconnectElement hidden" id="disconnectHeader">Lost connection with opponent :(</p>
+<p class="blockElement hidden" id="blockHeader">Unable to join room :(</p>
+<a class="game-button fade-in-bottom disconnectElement blockElement hidden" style="width:30vw;margin: 10vh 35vw; display:block" href="/drawn-out/duel-select">Go back</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{url_for('static',filename='drawnOutDuel.js')}}"></script>
 {% endblock %}

@@ -10,11 +10,12 @@ var socket = io();
 socket.on('connect', function() {
   socket.emit('my_event', {data: 'I\'m connected!'});
 });
+socket.on("gameCanceled", function(){
+  cancelGame();
+});
 socket.on("message", function(message) {
-  console.log(message);
 });
 socket.on("newQuestion", function(questionInfo){
-  console.log(questionInfo);
   pickQuestion(questionInfo);
 });
 
@@ -34,8 +35,11 @@ if (room === null){
     host=true;
   });
 }else{
-  socket.emit('join', room, (hostName) =>{
-    document.getElementById("opponentName").innerHTML=hostName;
+  socket.emit('join', room, (data) =>{
+    if(!data[0]){
+      blockJoin();
+    }
+    document.getElementById("opponentName").innerHTML=data[1];
   });
   host=false;
 }
@@ -197,15 +201,12 @@ function hidePaths(){
   }
 }
 function setPathAppearTime(questionInfo){
-  console.log("start of set path");
   paths = document.getElementsByTagName("path");
   let i=0;
   let j=1;
   arr=questionInfo["appearOrder"];
   firstHalf=5/(parseFloat(paths.length)*.4);
   secondHalf=15/(parseFloat(paths.length)*.6);
-  console.log(firstHalf);
-  console.log(secondHalf);
   for (const num of arr){
     if (i<(paths.length)/2){
       paths[num].style.transitionDelay=+firstHalf*i+"s";
@@ -216,7 +217,6 @@ function setPathAppearTime(questionInfo){
     }
     
   }
-  console.log("end of set path");
 }
 function toggleGameElements(){
   gameElements=document.getElementsByClassName("gameplayElement");
@@ -253,7 +253,7 @@ function awardPoint(myPoint){
     document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
   }
 
-  if(document.getElementById("opponentScoreHeader").innerHTML=="3" || document.getElementById("playerScoreHeader").innerHTML=="3"){
+  if(document.getElementById("opponentScoreHeader").innerHTML=="5" || document.getElementById("playerScoreHeader").innerHTML=="5"){
     endRound(myPoint);
     return;
   }
@@ -331,5 +331,29 @@ function lightUpName(myself){
     name=document.getElementById("opponentName");
   }
   name.style.color="green";
+}
+
+function cancelGame(){
+  let elements = document.body.getElementsByTagName("*");
+  for (const element of elements) {
+    element.classList.add("hidden");
+  }
+  disconnectElement=document.getElementsByClassName("disconnectElement");
+  for (const element of disconnectElement) {
+    element.classList.remove("hidden");
+    element.classList.add("active");
+  }
+}
+
+function blockJoin(){
+  let elements = document.body.getElementsByTagName("*");
+  for (const element of elements) {
+    element.classList.add("hidden");
+  }
+  disconnectElement=document.getElementsByClassName("blockElement");
+  for (const element of disconnectElement) {
+    element.classList.remove("hidden");
+    element.classList.add("active");
+  }
 }
 })();

@@ -18,7 +18,17 @@ def my_event(message):
     print("im in bois")
     emit('my_response',
          {'data': "harro"})
-
+    
+@socketio.on("disconnect")
+def clientDisconnect():
+    print("before: ", roomDict)
+    askedQuestions[rooms()[0]]=[]
+    try:
+        del roomDict[rooms()[0]]
+    except KeyError:
+        pass
+    emit("gameCanceled", to=rooms()[0])
+    print("after: ", roomDict)
 @socketio.event
 def connect():
     print(request.sid, "connected")
@@ -26,7 +36,9 @@ def connect():
 @socketio.event
 def makeRoom():
     leave_room(rooms()[0])
-    roomNumber= str(random.randint(1,100))
+    roomNumber = str(random.randint(1,100))
+    while roomNumber in roomDict.keys():
+        roomNumber = str(random.randint(1,100))
     join_room(roomNumber)
     roomDict[str(roomNumber)]=[]
     askedQuestions[str(roomNumber)]=[]
@@ -35,10 +47,12 @@ def makeRoom():
 
 @socketio.event
 def join(roomNumber):
+    if (str(roomNumber) not in roomDict.keys() or (len(roomDict[str(roomNumber)])>1)):
+        return [False, "Error"]
     leave_room(rooms()[0])
     join_room(str(roomNumber))
     roomDict[str(roomNumber)].append([request.sid,False])
-    return hostNames[rooms()[0]]
+    return [True,hostNames[rooms()[0]]]
 
 
 @socketio.event
