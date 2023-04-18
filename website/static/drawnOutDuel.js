@@ -119,7 +119,7 @@ function displayInviteInfo(){
 }
 
 function copyInvite(){
-  navigator.clipboard.writeText("http://127.0.0.1:5000/drawn-out/duel?room="+roomNum).then(function() {
+  navigator.clipboard.writeText("https://kanjigames.herokuapp.com/drawn-out/duel?room="+roomNum).then(function() {
     document.getElementById("inviteLinkButton").innerHTML="Copied!"
 }, function() {
     console.log('Copy error')
