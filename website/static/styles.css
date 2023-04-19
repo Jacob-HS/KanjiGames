@@ -153,6 +153,10 @@ body {
   opacity: 1;
 }
 
+.hiddenArrow{
+  opacity:0;
+}
+
 .scoreCounter {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
@@ -379,6 +383,7 @@ body {
   background-color: #312f31;
   box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.717);
 }
+
 
 .bannedAnswer {
   background-color: rgba(240, 248, 255, 0.527);
@@ -657,6 +662,7 @@ svg g{
   cursor: pointer;
 }
 
+
 .endGameButtonContainer {
   text-align: center;
   margin: 2vh 0;
@@ -715,6 +721,71 @@ svg g{
   width:20vw;
   height:100vh;
 }
+
+.difficultySettingContainer {
+  width:50%;
+  padding-left:5%;
+  height:8vh;
+  margin:0;
+}
+.difficultySettingHeader {
+  font-size: 1.25vw;
+  margin-bottom: 0;
+  color: white;
+  text-align: center;
+}
+.difficultyButton {
+  margin-top: 1vh;
+  font-size: 1.75vw;
+  text-align: center;
+  color:white;
+}
+
+.difficultyButtonContainer {
+  position: relative;
+}
+
+#leftSelector {
+  position: absolute;
+  z-index: 1;
+  width:30%;
+  height:100%;
+  left:0;
+}
+
+#rightSelector {
+  position: absolute;
+  z-index: 1;
+  width:30%;
+  height:100%;
+  right: 0;
+}
+
+#leftSelectorSL {
+  position: absolute;
+  z-index: 1;
+  width:30%;
+  height:100%;
+  left:0;
+}
+
+#rightSelectorSL {
+  position: absolute;
+  z-index: 1;
+  width:30%;
+  height:100%;
+  right: 0;
+}
+.roomCreationSettingsContainer {
+  display: flex;
+  margin-top: 2vh;
+}
+.scoreLimitSettingContainer {
+  width:45%;
+  margin:0;
+  height:7vh;
+}
+
 @media only screen and (max-width: 768px) {
   .flex-container {
     margin: 0 5%;

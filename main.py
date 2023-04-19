@@ -5,7 +5,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, rooms, send
 import random
 app = create_app()
 socketio = SocketIO(app)
-hostNames = {}
+roomInfo = {} #{"roomName": {"participants":[], "hostName":"", "difficulty": int, "scoreLimit": int}} <- make this happen
 roomDict = {}
 askedQuestions={}
 
@@ -64,15 +64,19 @@ def pickName(name, host):
         emit("startGame", to=rooms()[0])
 
 @socketio.event
-def requestQuestion():
-    questionInfo=generateNewQuestion(rooms()[0])
+def requestQuestion(difficulty):
+    questionInfo=generateNewQuestion(rooms()[0], difficulty)
     emit("newQuestion", questionInfo, to=rooms()[0])
 
-def generateNewQuestion(room):
+def generateNewQuestion(room, difficulty):
     questionInfo={}
-    key, value = random.choice(list(vnJukugo.items()))
+    if (difficulty==1):
+        activePool=list(vnJukugo.items())[:1585]
+    if (difficulty==2):
+        activePool=list(vnJukugo.items())
+    key, value = random.choice(activePool)
     while key in askedQuestions[room]:
-        key, value = random.choice(list(vnJukugo.items()))
+        key, value = random.choice(activePool)
     questionInfo["word"]=key
     questionInfo["hiragana"]=value
     questionInfo["svgs"]=[]

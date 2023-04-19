@@ -1,6 +1,9 @@
 (() => {
+const maxDiff=2;
 let roomNum;
 let host;
+let difficulty = 1;
+let scoreLimit = 10;
 let intervalID;
 let askedPool=[];
 let currentQuestion;
@@ -87,7 +90,19 @@ answer.addEventListener("input", function(event){
 document.getElementById("duelAgain").addEventListener("click", function(event){
   readyUp();
   socket.emit("readyUp")
-})
+});
+document.getElementById("leftSelector").addEventListener("click", function(){
+  moveDifficultyLeft();
+});
+document.getElementById("rightSelector").addEventListener("click", function(){
+  moveDifficultyRight();
+});
+document.getElementById("leftSelectorSL").addEventListener("click", function(){
+  moveScoreLimitLeft();
+});
+document.getElementById("rightSelectorSL").addEventListener("click", function(){
+  moveScoreLimitRight();
+});
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
@@ -152,7 +167,7 @@ function tickDown(){
     countdownTimer.classList.add("hidden");
     toggleGameElements();
     if (host){
-      socket.emit("requestQuestion");
+      socket.emit("requestQuestion", difficulty);
     }
   }
 }
@@ -253,7 +268,7 @@ function awardPoint(myPoint){
     document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
   }
 
-  if(document.getElementById("opponentScoreHeader").innerHTML=="5" || document.getElementById("playerScoreHeader").innerHTML=="5"){
+  if(document.getElementById("opponentScoreHeader").innerHTML== scoreLimit.toString() || document.getElementById("playerScoreHeader").innerHTML== scoreLimit.toString()){
     endRound(myPoint);
     return;
   }
@@ -266,7 +281,7 @@ function awardPoint(myPoint){
   document.getElementById("answeredCorrectlyBanner").style.opacity="1";
   setTimeout(() => {
     if (host){
-      socket.emit("requestQuestion");
+      socket.emit("requestQuestion", difficulty);
     }
     document.getElementById("answer").focus();
     document.getElementById("answeredCorrectlyBanner").style.opacity="0";
@@ -355,5 +370,71 @@ function blockJoin(){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
+}
+
+function moveDifficultyLeft(){
+  if (difficulty==1){
+    return;
+  }
+  if (difficulty==maxDiff){
+    document.getElementById("rightDifficultyArrow").classList.remove("hiddenArrow");
+  }
+  difficulty--;
+  updateDifficultyName(difficulty);
+  if(difficulty==1){
+    document.getElementById("leftDifficultyArrow").classList.add("hiddenArrow");
+  }
+  console.log(difficulty);
+}
+
+function moveDifficultyRight(){
+  if (difficulty==maxDiff){
+    return;
+  }
+  if (difficulty==1){
+    document.getElementById("leftDifficultyArrow").classList.remove("hiddenArrow");
+  }
+  difficulty++;
+  updateDifficultyName(difficulty);
+  if(difficulty==maxDiff){
+    document.getElementById("rightDifficultyArrow").classList.add("hiddenArrow");
+  }
+  console.log(difficulty);
+}
+
+function updateDifficultyName(difficulty){
+  difficultyName = document.getElementById("currentDifficulty");
+  if(difficulty==1) difficultyName.innerHTML="Easy";
+  if(difficulty==2) difficultyName.innerHTML="Medium";
+}
+
+function moveScoreLimitLeft(){
+  if (scoreLimit==5){
+    return;
+  }
+
+  if (scoreLimit==25){
+    document.getElementById("rightScoreLimitArrow").classList.remove("hiddenArrow");
+  }
+  scoreLimit-=5;
+
+  if (scoreLimit==5){
+    document.getElementById("leftScoreLimitArrow").classList.add("hiddenArrow");
+  }
+  document.getElementById("currentScoreLimit").innerHTML=scoreLimit;
+}
+
+function moveScoreLimitRight(){
+  if (scoreLimit == 25){
+    return;
+  }
+  if (scoreLimit == 5){
+    document.getElementById("leftScoreLimitArrow").classList.remove("hiddenArrow");
+  }
+  scoreLimit+=5;
+  if (scoreLimit==25){
+    document.getElementById("rightScoreLimitArrow").classList.add("hiddenArrow");
+  }
+  document.getElementById("currentScoreLimit").innerHTML=scoreLimit;
 }
 })();
