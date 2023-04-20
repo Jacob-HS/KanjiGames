@@ -33,6 +33,7 @@ socket.on("opponentReady",function(){
 const urlParams = new URLSearchParams(location.search);
 let room = urlParams.get("room")
 if (room === null){
+  document.getElementById("settingsContainer").classList.remove("hidden");
   socket.emit('makeRoom', (roomNumba) => {
     roomNum=roomNumba;
     host=true;
@@ -43,6 +44,7 @@ if (room === null){
       blockJoin();
     }
     document.getElementById("opponentName").innerHTML=data[1];
+    scoreLimit=data[2];
   });
   host=false;
 }
@@ -107,7 +109,7 @@ function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
   if (potentialName){
-    socket.emit("pickName", potentialName, host);
+    socket.emit("pickName", potentialName, host, scoreLimit, difficulty);
     document.getElementById("playerName").innerHTML=potentialName;
     hideNameCreation();
     if (host) displayInviteInfo();
