@@ -188,9 +188,10 @@ function pickQuestion(questionInfo){
     svgContainer.innerHTML=svgContainer.innerHTML+questionInfo["svgs"][kanji];
   }
   smushSvgs();
-  hidePaths();
+  //hidePaths();
   setPathAppearTime(questionInfo);
-  setTimeout(startPathAppearance, 50);
+  startPathAppearance();
+  //setTimeout(startPathAppearance, 50);
 }
 
 function smushSvgs(){
@@ -211,13 +212,13 @@ function smushSvgs(){
 function startPathAppearance(){
   paths = document.getElementsByTagName("path");
   for (const path of paths){
-    path.classList.add("activePath");
+    path.style.animationPlayState="running";
   }
 }
 function hidePaths(){
   paths = document.getElementsByTagName("path");
   for (const path of paths){
-    path.classList.add("hiddenPath");
+    //path.classList.add("hiddenPath");
   }
 }
 function setPathAppearTime(questionInfo){
@@ -229,10 +230,10 @@ function setPathAppearTime(questionInfo){
   secondHalf=15/(parseFloat(paths.length)*.6);
   for (const num of arr){
     if (i<(paths.length)/2){
-      paths[num].style.transitionDelay=+firstHalf*i+"s";
+      paths[num].style.animationDelay=+firstHalf*i+"s";
       i++;
     } else{
-      paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
+      paths[num].style.animationDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
   }
@@ -297,10 +298,12 @@ function showAnswer(myPoint){
     svgContainer.innerHTML=svgContainer.innerHTML+currentSvgs[i];
   }
   smushSvgs();
-  paths=document.getElementsByTagName("g");
+  paths=document.getElementsByTagName("path");
   for (const path of paths) {
+    path.style.opacity="1";
     if(myPoint) path.style.stroke="green";
     if(!myPoint) path.style.stroke="red";
+
   }
 }
 
