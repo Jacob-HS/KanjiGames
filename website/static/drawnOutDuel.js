@@ -105,7 +105,7 @@ document.getElementById("leftSelectorSL").addEventListener("click", function(){
 document.getElementById("rightSelectorSL").addEventListener("click", function(){
   moveScoreLimitRight();
 });
-document.getElementById("duelExit").addEventListener("click", function(){
+document.getElementById("duelExit").addEventListener("click",function(){
   document.location.href="https://kanjigames.herokuapp.com/drawn-out/duel-select";
 });
 function checkName(){
@@ -236,7 +236,6 @@ function setPathAppearTime(questionInfo){
       paths[num].style.animationDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
-    
   }
 }
 function toggleGameElements(){
@@ -274,11 +273,6 @@ function awardPoint(myPoint){
     document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
   }
 
-  if(document.getElementById("opponentScoreHeader").innerHTML== scoreLimit.toString() || document.getElementById("playerScoreHeader").innerHTML== scoreLimit.toString()){
-    endRound(myPoint);
-    return;
-  }
-
   if(myPoint){
     document.getElementById("answeredCorrectlyName").innerHTML="You";
   }else{
@@ -286,11 +280,15 @@ function awardPoint(myPoint){
   }
   document.getElementById("answeredCorrectlyBanner").style.opacity="1";
   setTimeout(() => {
-    if (host){
-      socket.emit("requestQuestion", difficulty);
+    if(document.getElementById("opponentScoreHeader").innerHTML== scoreLimit.toString() || document.getElementById("playerScoreHeader").innerHTML== scoreLimit.toString()){
+      endRound(myPoint);
+    }else{
+      if (host){
+        socket.emit("requestQuestion", difficulty);
+      }
+      document.getElementById("answer").focus();
+      document.getElementById("answeredCorrectlyBanner").style.opacity="0";
     }
-    document.getElementById("answer").focus();
-    document.getElementById("answeredCorrectlyBanner").style.opacity="0";
   }, 2000);
 }
 function showAnswer(myPoint){
@@ -412,8 +410,8 @@ function moveDifficultyRight(){
 
 function updateDifficultyName(difficulty){
   difficultyName = document.getElementById("currentDifficulty");
-  if(difficulty==1) difficultyName.innerHTML="Easy";
-  if(difficulty==2) difficultyName.innerHTML="Medium";
+  if(difficulty==1) difficultyName.innerHTML="Top 5k";
+  if(difficulty==2) difficultyName.innerHTML="Top 10k";
 }
 
 function moveScoreLimitLeft(){
