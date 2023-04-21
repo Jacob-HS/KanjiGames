@@ -105,6 +105,9 @@ document.getElementById("leftSelectorSL").addEventListener("click", function(){
 document.getElementById("rightSelectorSL").addEventListener("click", function(){
   moveScoreLimitRight();
 });
+document.getElementById("duelExit").addEventListener("click",function(){
+  document.location.href="https://kanjigames.herokuapp.com/drawn-out/duel-select";
+});
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
@@ -232,7 +235,6 @@ function setPathAppearTime(questionInfo){
       paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
-    
   }
 }
 function toggleGameElements(){
@@ -406,8 +408,8 @@ function moveDifficultyRight(){
 
 function updateDifficultyName(difficulty){
   difficultyName = document.getElementById("currentDifficulty");
-  if(difficulty==1) difficultyName.innerHTML="Easy";
-  if(difficulty==2) difficultyName.innerHTML="Medium";
+  if(difficulty==1) difficultyName.innerHTML="Top 5k";
+  if(difficulty==2) difficultyName.innerHTML="Top 10k";
 }
 
 function moveScoreLimitLeft(){

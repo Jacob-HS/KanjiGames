@@ -3,11 +3,21 @@
 {% block title %}Kanji Games - Game Select{% endblock %}
 
 {% block content %}
-
+<p class="menuHeader">Kanji Games</p>
 <div class="flex-container" id="myContainer">
-  <a class="game-button fade-in-bottom" href="/radical-rush/mode-select">Radical Rush</a>
-  <a class="game-button fade-in-bottom" href="/kanjitori/mode-select">Kanjitori</a>
-  <a class="game-button fade-in-bottom" href="/drawn-out/mode-select">Drawn-Out</a>
+  <a class="game-button fade-in-bottom first" href="/radical-rush/mode-select">Radical Rush</a>
+  <div class="tooltip">
+    <p>Answer with a kanji with a component in it before the clock runs out</p>
+  </div>
+  <a class="game-button fade-in-bottom second" href="/kanjitori/mode-select">Kanjitori</a>
+  <div class="tooltip" stly>
+    <p>Shiritori with a twist</p>
+
+  </div>
+  <a class="game-button fade-in-bottom third" href="/drawn-out/mode-select">Drawn-Out</a>
+  <div class="tooltip">
+    <p>Guess the jukugo as it's being drawn out</p>
+  </div>
 </div>
 <script type="text/javascript" src="{{url_for('static',filename='home.js')}}"></script>
 {% endblock %}
