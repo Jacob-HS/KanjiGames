@@ -171,6 +171,7 @@ function tickDown(){
     countdownTimer.classList.remove("active");
     countdownTimer.classList.add("hidden");
     toggleGameElements();
+    document.getElementById("answer").focus();
     if (host){
       socket.emit("requestQuestion", difficulty);
     }
@@ -187,6 +188,7 @@ function pickQuestion(questionInfo){
   for (const kanji in currentQuestion){
     svgContainer.innerHTML=svgContainer.innerHTML+questionInfo["svgs"][kanji];
   }
+  document.getElementById("answer").focus();
   smushSvgs();
   //hidePaths();
   setPathAppearTime(questionInfo);
@@ -286,12 +288,13 @@ function awardPoint(myPoint){
       if (host){
         socket.emit("requestQuestion", difficulty);
       }
-      document.getElementById("answer").focus();
+      document.getElementById("answer").blur();
       document.getElementById("answeredCorrectlyBanner").style.opacity="0";
     }
   }, 2000);
 }
 function showAnswer(myPoint){
+  document.getElementById("answer").value="";
   svgContainer.innerHTML="";
   for (const i in currentQuestion){
     svgContainer.innerHTML=svgContainer.innerHTML+currentSvgs[i];
