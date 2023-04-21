@@ -13,7 +13,7 @@
     <p class="game-button fade-in-bottom" style="width:30vw;margin-left:2vw;" id="joinGameButton">Join game</p>
     <div class="joinRoomContainer fade-in-bottom hidden" id="testElement">
       <p class="joinRoomLabel" >Room #:</p>
-      <input class="joinRoomInput" type="text" autocomplete="off">
+      <input class="joinRoomInput" id="joinRoomInput" type="text" autocomplete="off">
     </div>
   </div>
   
@@ -22,10 +22,16 @@
 
 
 <script>
+  document.getElementById("testElement").addEventListener("keypress", function(event){
+    if(event.key=="Enter"){
+      document.location.href="http://127.0.0.1:5000/drawn-out/duel?room="+document.getElementById("joinRoomInput").value;
+    }
+  });
   document.getElementById("joinGameButton").addEventListener("click",  function(){
     this.classList.add("slide-out-top");
     document.getElementById("testElement").classList.add("active");
     document.getElementById("testElement").classList.remove("hidden");
+    document.getElementById("joinRoomInput").focus();
     
   });
 </script>

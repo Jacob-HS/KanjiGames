@@ -27,6 +27,12 @@
   }
 }
 
+@keyframes fadeIn {
+  to {
+    opacity:1;
+  }
+}
+
 @-webkit-keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}@keyframes slide-out-top{0%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}100%{-webkit-transform:translateY(-1000px);transform:translateY(-1000px);opacity:0}}
 .slide-out-top{-webkit-animation:slide-out-top .75s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-top .75s cubic-bezier(.55,.085,.68,.53) both}
 
@@ -518,7 +524,11 @@ body {
   bottom:80%;
 }
 path {
-  transition: opacity 1s;
+  opacity: 0;
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-play-state: paused;
+  animation-fill-mode: forwards;
 }
 svg {
   width: 20vw !important;
@@ -603,7 +613,7 @@ svg g{
   box-shadow: 0 0 0 100vmax rgba(0,0,0,.3); 
 }
 .endGameDisplayBox {
-  width: 20vw;
+  width: 35vw;
   background-color: #312f31;
   border-radius: 1vw;
   box-shadow: 0 0 0 100vmax rgba(0,0,0,.3); 
@@ -613,7 +623,7 @@ svg g{
   margin-top: 2vh;
   margin-bottom: 0;
   color: white; 
-  font-size: 2vw;
+  font-size: 5vw;
 }
 
 .playAgainHeader {
@@ -621,7 +631,7 @@ svg g{
   margin-top: 2vh;
   margin-bottom: 0;
   color: white; 
-  font-size: 1.5vw;
+  font-size: 2vw;
 }
 .roomCreationBoxHeader {
   text-align: center;
@@ -683,16 +693,17 @@ svg g{
 }
 
 #duelAgain{
-  font-size: 1.5vw;
+  font-size: 2.5vw;
   border-radius: .5vw;
   padding: 1vh 1vw;
+  margin-right: 1vw;
   border: none;
   background-color: green;
   color: white;
 }
 
 #duelExit {
-  font-size: 1.5vw;
+  font-size: 2.5vw;
   border-radius: .5vw;
   padding: 1vh 1vw;
   border: none;
@@ -790,7 +801,7 @@ svg g{
 }
 
 .joinRoomContainer {
-  width:30vw;
+  width:35vw;
   position: absolute;
   top:0;
   animation-delay: 200ms;
@@ -803,7 +814,6 @@ svg g{
   display: inline-block;
   color: white;
   font-size: 8vh;
-
 }
 
 .joinRoomInput {
@@ -815,6 +825,7 @@ svg g{
   color: white;
   font-size: 8vh;
   width: 7vw;
+  caret-color: transparent;
 }
 
 .joinRoomInput:focus{

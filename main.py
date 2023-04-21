@@ -15,7 +15,8 @@ with open("vnJukugo.json","r",encoding="utf-8") as svgfile:
     vnJukugo=json.load(svgfile)
 @socketio.on("my_event")
 def my_event(message):
-    print("im in bois")
+
+    print("\n\n",roomInfo,"\n\n")
     emit('my_response',
          {'data': "harro"})
     
