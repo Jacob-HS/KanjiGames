@@ -9,7 +9,30 @@
 
 <div class="duelSelectFlexContainer">
   <a class="game-button fade-in-bottom" style="width:30vw;margin-right:2vw" href="/drawn-out/duel">Create a game</a>
-  <p class="game-button fade-in-bottom" style="width:30vw;margin-left:2vw">Join game (まだ)</p>  
+  <div style="position: relative;">
+    <p class="game-button fade-in-bottom" style="width:30vw;margin-left:2vw;" id="joinGameButton">Join game</p>
+    <div class="joinRoomContainer fade-in-bottom hidden" id="testElement">
+      <p class="joinRoomLabel" >Room #:</p>
+      <input class="joinRoomInput" id="joinRoomInput" type="text" autocomplete="off">
+    </div>
+  </div>
+  
+   
 </div>
 
+
+<script>
+  document.getElementById("testElement").addEventListener("keypress", function(event){
+    if(event.key=="Enter"){
+      document.location.href="http://127.0.0.1:5000/drawn-out/duel?room="+document.getElementById("joinRoomInput").value;
+    }
+  });
+  document.getElementById("joinGameButton").addEventListener("click",  function(){
+    this.classList.add("slide-out-top");
+    document.getElementById("testElement").classList.add("active");
+    document.getElementById("testElement").classList.remove("hidden");
+    document.getElementById("joinRoomInput").focus();
+    
+  });
+</script>
 {% endblock %}

@@ -16,8 +16,24 @@
 </div>
 <div class="roomCreationContainer" id="roomCreationContainer">
   <div class="roomCreationBox">
-    <p class="roomCreationBoxHeader nameCreationElement active">Pick a name!</p>
+    <p class="roomCreationBoxHeader nameCreationElement active">Pick a name:</p>
     <input class="roomCreationBoxInput nameCreationElement active" id="nameAnswer">
+    <div class="roomCreationSettingsContainer nameCreationElement hidden" id="settingsContainer">
+      <div class="difficultySettingContainer">
+        <p class="difficultySettingHeader">Difficulty:</p>
+        <div class="difficultyButtonContainer">
+          <div id="leftSelector"></div><div id="rightSelector"></div>
+          <p class="difficultyButton"><span class="leftDifficultyArrow hiddenArrow" id="leftDifficultyArrow"><i class="fa fa-sort-up fa-rotate-270"></i></span> <span class="currentDifficulty" id="currentDifficulty">Easy</span> <span class="rightDifficultyArrow" id="rightDifficultyArrow"><i class="fa fa-sort-up fa-rotate-90"></i></span></p>
+        </div>
+      </div>
+      <div class="scoreLimitSettingContainer">
+        <p class="difficultySettingHeader">Score Limit:</p>
+        <div class="difficultyButtonContainer">
+          <div id="leftSelectorSL"></div><div id="rightSelectorSL"></div>
+          <p class="difficultyButton"><span class="leftDifficultyArrow" id="leftScoreLimitArrow"><i class="fa fa-sort-up fa-rotate-270"></i></span> <span class="currentDifficulty" id="currentScoreLimit">10</span> <span class="rightDifficultyArrow" id="rightScoreLimitArrow"><i class="fa fa-sort-up fa-rotate-90"></i></span></p>
+        </div>
+      </div>
+    </div>
     <button class="roomCreationBoxSubmit nameCreationElement active" id="nameAnswerButton">Next</button>
     <p class="roomCreationBoxHeader inviteInfoElement hidden">Invite a friend:</p>
     <button class="inviteLinkButton inviteInfoElement hidden" id="inviteLinkButton">Copy invite link</button>

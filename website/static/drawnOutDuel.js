@@ -1,6 +1,9 @@
 (() => {
+const maxDiff=2;
 let roomNum;
 let host;
+let difficulty = 1;
+let scoreLimit = 10;
 let intervalID;
 let askedPool=[];
 let currentQuestion;
@@ -30,6 +33,7 @@ socket.on("opponentReady",function(){
 const urlParams = new URLSearchParams(location.search);
 let room = urlParams.get("room")
 if (room === null){
+  document.getElementById("settingsContainer").classList.remove("hidden");
   socket.emit('makeRoom', (roomNumba) => {
     roomNum=roomNumba;
     host=true;
@@ -40,6 +44,7 @@ if (room === null){
       blockJoin();
     }
     document.getElementById("opponentName").innerHTML=data[1];
+    scoreLimit=data[2];
   });
   host=false;
 }
@@ -87,12 +92,24 @@ answer.addEventListener("input", function(event){
 document.getElementById("duelAgain").addEventListener("click", function(event){
   readyUp();
   socket.emit("readyUp")
-})
+});
+document.getElementById("leftSelector").addEventListener("click", function(){
+  moveDifficultyLeft();
+});
+document.getElementById("rightSelector").addEventListener("click", function(){
+  moveDifficultyRight();
+});
+document.getElementById("leftSelectorSL").addEventListener("click", function(){
+  moveScoreLimitLeft();
+});
+document.getElementById("rightSelectorSL").addEventListener("click", function(){
+  moveScoreLimitRight();
+});
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
   if (potentialName){
-    socket.emit("pickName", potentialName, host);
+    socket.emit("pickName", potentialName, host, scoreLimit, difficulty);
     document.getElementById("playerName").innerHTML=potentialName;
     hideNameCreation();
     if (host) displayInviteInfo();
@@ -152,7 +169,7 @@ function tickDown(){
     countdownTimer.classList.add("hidden");
     toggleGameElements();
     if (host){
-      socket.emit("requestQuestion");
+      socket.emit("requestQuestion", difficulty);
     }
   }
 }
@@ -168,9 +185,10 @@ function pickQuestion(questionInfo){
     svgContainer.innerHTML=svgContainer.innerHTML+questionInfo["svgs"][kanji];
   }
   smushSvgs();
-  hidePaths();
+  //hidePaths();
   setPathAppearTime(questionInfo);
-  setTimeout(startPathAppearance, 50);
+  startPathAppearance();
+  //setTimeout(startPathAppearance, 50);
 }
 
 function smushSvgs(){
@@ -191,13 +209,13 @@ function smushSvgs(){
 function startPathAppearance(){
   paths = document.getElementsByTagName("path");
   for (const path of paths){
-    path.classList.add("activePath");
+    path.style.animationPlayState="running";
   }
 }
 function hidePaths(){
   paths = document.getElementsByTagName("path");
   for (const path of paths){
-    path.classList.add("hiddenPath");
+    //path.classList.add("hiddenPath");
   }
 }
 function setPathAppearTime(questionInfo){
@@ -209,10 +227,10 @@ function setPathAppearTime(questionInfo){
   secondHalf=15/(parseFloat(paths.length)*.6);
   for (const num of arr){
     if (i<(paths.length)/2){
-      paths[num].style.transitionDelay=+firstHalf*i+"s";
+      paths[num].style.animationDelay=+firstHalf*i+"s";
       i++;
     } else{
-      paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
+      paths[num].style.animationDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
     
@@ -253,7 +271,7 @@ function awardPoint(myPoint){
     document.getElementById("opponentScoreHeader").innerHTML=parseInt(document.getElementById("opponentScoreHeader").innerHTML)+1;
   }
 
-  if(document.getElementById("opponentScoreHeader").innerHTML=="5" || document.getElementById("playerScoreHeader").innerHTML=="5"){
+  if(document.getElementById("opponentScoreHeader").innerHTML== scoreLimit.toString() || document.getElementById("playerScoreHeader").innerHTML== scoreLimit.toString()){
     endRound(myPoint);
     return;
   }
@@ -266,7 +284,7 @@ function awardPoint(myPoint){
   document.getElementById("answeredCorrectlyBanner").style.opacity="1";
   setTimeout(() => {
     if (host){
-      socket.emit("requestQuestion");
+      socket.emit("requestQuestion", difficulty);
     }
     document.getElementById("answer").focus();
     document.getElementById("answeredCorrectlyBanner").style.opacity="0";
@@ -278,10 +296,12 @@ function showAnswer(myPoint){
     svgContainer.innerHTML=svgContainer.innerHTML+currentSvgs[i];
   }
   smushSvgs();
-  paths=document.getElementsByTagName("g");
+  paths=document.getElementsByTagName("path");
   for (const path of paths) {
+    path.style.opacity="1";
     if(myPoint) path.style.stroke="green";
     if(!myPoint) path.style.stroke="red";
+
   }
 }
 
@@ -355,5 +375,71 @@ function blockJoin(){
     element.classList.remove("hidden");
     element.classList.add("active");
   }
+}
+
+function moveDifficultyLeft(){
+  if (difficulty==1){
+    return;
+  }
+  if (difficulty==maxDiff){
+    document.getElementById("rightDifficultyArrow").classList.remove("hiddenArrow");
+  }
+  difficulty--;
+  updateDifficultyName(difficulty);
+  if(difficulty==1){
+    document.getElementById("leftDifficultyArrow").classList.add("hiddenArrow");
+  }
+  console.log(difficulty);
+}
+
+function moveDifficultyRight(){
+  if (difficulty==maxDiff){
+    return;
+  }
+  if (difficulty==1){
+    document.getElementById("leftDifficultyArrow").classList.remove("hiddenArrow");
+  }
+  difficulty++;
+  updateDifficultyName(difficulty);
+  if(difficulty==maxDiff){
+    document.getElementById("rightDifficultyArrow").classList.add("hiddenArrow");
+  }
+  console.log(difficulty);
+}
+
+function updateDifficultyName(difficulty){
+  difficultyName = document.getElementById("currentDifficulty");
+  if(difficulty==1) difficultyName.innerHTML="Easy";
+  if(difficulty==2) difficultyName.innerHTML="Medium";
+}
+
+function moveScoreLimitLeft(){
+  if (scoreLimit==5){
+    return;
+  }
+
+  if (scoreLimit==25){
+    document.getElementById("rightScoreLimitArrow").classList.remove("hiddenArrow");
+  }
+  scoreLimit-=5;
+
+  if (scoreLimit==5){
+    document.getElementById("leftScoreLimitArrow").classList.add("hiddenArrow");
+  }
+  document.getElementById("currentScoreLimit").innerHTML=scoreLimit;
+}
+
+function moveScoreLimitRight(){
+  if (scoreLimit == 25){
+    return;
+  }
+  if (scoreLimit == 5){
+    document.getElementById("leftScoreLimitArrow").classList.remove("hiddenArrow");
+  }
+  scoreLimit+=5;
+  if (scoreLimit==25){
+    document.getElementById("rightScoreLimitArrow").classList.add("hiddenArrow");
+  }
+  document.getElementById("currentScoreLimit").innerHTML=scoreLimit;
 }
 })();
