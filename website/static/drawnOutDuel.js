@@ -105,6 +105,9 @@ document.getElementById("leftSelectorSL").addEventListener("click", function(){
 document.getElementById("rightSelectorSL").addEventListener("click", function(){
   moveScoreLimitRight();
 });
+document.getElementById("duelExit").addEventListener("click", function(){
+  document.location.href="https://kanjigames.herokuapp.com/drawn-out/duel-select";
+});
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
   document.getElementById("nameAnswer").value="";
