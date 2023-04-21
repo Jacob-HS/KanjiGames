@@ -96,6 +96,7 @@ body {
 
 .flex-container {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-content: center;
   margin: 0 30%;
@@ -543,10 +544,17 @@ svg g{
   stroke: green !important;  
 }
 
+.menuHeader {
+  color: white;
+  font-size: 6vw;
+  text-align: center;
+  font-weight: bold;
+}
+
 .duelSelectFlexContainer{
   display: flex;
   margin: 0 10%;
-  height: 80vh;
+  height: 20vh;
   align-items: center;
   justify-content: center;
 }
@@ -746,6 +754,7 @@ svg g{
 .difficultySettingHeader {
   font-size: 1.25vw;
   margin-bottom: 0;
+  
   color: white;
   text-align: center;
 }
