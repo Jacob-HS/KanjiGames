@@ -551,6 +551,14 @@ svg g{
   font-weight: bold;
 }
 
+.imageMenuHeader {
+  margin:auto;
+  margin-top: 5vh;
+  width:30vw;
+  display: block;
+  
+}
+
 .duelSelectFlexContainer{
   display: flex;
   margin: 0 10%;
