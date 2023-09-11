@@ -850,7 +850,7 @@ svg g{
   outline: none !important;
   box-shadow: 0 0 10px #ffffff;
 }
-@media only screen and (max-width: 768px) {
+@media screen and (max-device-aspect-ratio: 1) {
   .flex-container {
     margin: 0 5%;
   }

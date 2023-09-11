@@ -125,7 +125,6 @@ function pickQuestion(){
     svgContainer.innerHTML=svgContainer.innerHTML+masterList[kanji];
   }
   smushSvgs();
-  hidePaths();
   setPathAppearTime();
   resetTimer();
 
@@ -153,31 +152,26 @@ function smushSvgs(){
 function startPathAppearance(){
   paths = document.getElementsByTagName("path");
   for (const path of paths){
-    path.classList.add("activePath");
+    path.style.animationPlayState="running";
   }
 }
 
 function setPathAppearTime(){
-  console.log("start of set path");
   paths = document.getElementsByTagName("path");
   let i=0;
   let j=1;
   arr=getRandomArray(paths.length);
   firstHalf=5/(parseFloat(paths.length)*.4);
   secondHalf=15/(parseFloat(paths.length)*.6);
-  console.log(firstHalf);
-  console.log(secondHalf);
   for (const num of arr){
     if (i<(paths.length)/2){
-      paths[num].style.transitionDelay=+firstHalf*i+"s";
+      paths[num].style.animationDelay=+firstHalf*i+"s";
       i++;
     } else{
-      paths[num].style.transitionDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
+      paths[num].style.animationDelay=firstHalf*(i-1)+(secondHalf*(j))+"s";
       j++;
     }
-    
   }
-  console.log("end of set path");
 }
 function getRandomArray(length){
   const arr =[];
