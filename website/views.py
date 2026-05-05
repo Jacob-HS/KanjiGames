@@ -17,7 +17,7 @@ with open("svgjson.json","r",encoding="utf-8") as svgfile:
     svgs=json.load(svgfile)
 with open("vnJukugo.json","r",encoding="utf-8") as svgfile:
     vnJukugo=json.load(svgfile)
-
+print("step 10")
 @views.route('/')
 def home():
     return render_template("home.html")

@@ -4,15 +4,17 @@ import json
 from flask_socketio import SocketIO, emit, join_room, leave_room, rooms, send
 import random
 app = create_app()
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='gevent')
 roomInfo = {} #{"roomName": {"participants":[], "askedQuestions"=[], "hostName":"", "difficulty": int, "scoreLimit": int}} <- make this happen
 roomDict = {}
 askedQuestions={}
-
+print("step 1")
 with open("svgjson.json","r",encoding="utf-8") as svgfile:
     svgs=json.load(svgfile)
+print("step 2")
 with open("vnJukugo.json","r",encoding="utf-8") as svgfile:
     vnJukugo=json.load(svgfile)
+print("step 3")
 @socketio.on("my_event")
 def my_event(message):
 
@@ -119,4 +121,6 @@ def readyUp():
 
 
 if __name__ == '__main__':
+    print("step 4")
     socketio.run(app, debug=True)
+   
