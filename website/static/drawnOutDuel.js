@@ -106,7 +106,7 @@ document.getElementById("rightSelectorSL").addEventListener("click", function(){
   moveScoreLimitRight();
 });
 document.getElementById("duelExit").addEventListener("click",function(){
-  document.location.href="https://kanjigames.herokuapp.com/drawn-out/duel-select";
+  document.location.href="https://www.kanjigames.cool/drawn-out/duel-select";
 });
 function checkName(){
   let potentialName=document.getElementById("nameAnswer").value;
@@ -139,7 +139,7 @@ function displayInviteInfo(){
 }
 
 function copyInvite(){
-  navigator.clipboard.writeText("https://kanjigames.herokuapp.com/drawn-out/duel?room="+roomNum).then(function() {
+  navigator.clipboard.writeText("https://www.kanjigames.cool/drawn-out/duel?room="+roomNum).then(function() {
     document.getElementById("inviteLinkButton").innerHTML="Copied!"
 }, function() {
     console.log('Copy error')
